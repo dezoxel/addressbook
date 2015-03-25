@@ -1,8 +1,8 @@
 'use strcit'
 
 angular.module('addressbookApp')
-  .service('db', function() {
-    this.addressbook = [
+  .service('Addressbook', function() {
+    var _data = [
       {
         "name": "Octavius Vega",
         "address": "160-8652 Consectetuer Street"
@@ -204,4 +204,9 @@ angular.module('addressbookApp')
         "address": "517-6733 Integer Av."
       }
     ];
+
+    this.all = function() {
+      return _data;
+    };
+
   });

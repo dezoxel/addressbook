@@ -8,8 +8,7 @@
  * Controller of the addressbookApp
  */
 angular.module('addressbookApp')
-  .controller('MainCtrl', function (db) {
-    console.log(db);
+  .controller('MainCtrl', function (Addressbook) {
     this.searchInput = '';
-    this.addressbook = db.addressbook;
+    this.addressbook = Addressbook.all();
   });
