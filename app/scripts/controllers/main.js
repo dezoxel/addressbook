@@ -10,5 +10,6 @@
 angular.module('addressbookApp')
   .controller('MainCtrl', function (db) {
     console.log(db);
+    this.searchInput = '';
     this.addressbook = db.addressbook;
   });
