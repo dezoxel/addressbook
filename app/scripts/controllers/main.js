@@ -8,10 +8,7 @@
  * Controller of the addressbookApp
  */
 angular.module('addressbookApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function (db) {
+    console.log(db);
+    this.addressbook = db.addressbook;
   });
