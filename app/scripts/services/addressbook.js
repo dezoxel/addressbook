@@ -209,4 +209,8 @@ angular.module('addressbookApp')
       return _data;
     };
 
+    this.destroyByIndex = function(i) {
+      _data.splice(i, 1);
+    };
+
   });
