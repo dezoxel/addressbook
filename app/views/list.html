@@ -1,4 +1,4 @@
-<div class="container" ng-controller="MainCtrl as main">
+<div class="container" ng-controller="ListCtrl as list">
   <input type="text" class="form-control" id="searchInput" placeholder="Type name or address to search" ng-model="searchInput">
   <table class="table table-striped table-hover table-bordered">
     <tr>
@@ -8,14 +8,14 @@
         <button type="button" class="btn btn-primary btn-sm">Add address</button>
       </th>
     </tr>
-    <tr ng-repeat="entry in main.addressbook | filter:searchInput">
+    <tr ng-repeat="entry in list.addressbook | filter:searchInput">
       <td>{{ entry.name }}</td>
       <td>{{ entry.address }}</td>
       <td>
         <button type="button" class="btn btn-default btn-sm">
           <span class="glyphicon glyphicon-pencil"></span> Edit
         </button>
-        <button type="button" class="btn btn-danger btn-sm" ng-click="main.deleteEntryBy($index)">
+        <button type="button" class="btn btn-danger btn-sm" ng-click="list.deleteEntryBy($index)">
           <span class="glyphicon glyphicon-trash"></span> Delete
         </button>
       </td>

@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name addressbookApp.controller:MainCtrl
+ * @name addressbookApp.controller:ListCtrl
  * @description
- * # MainCtrl
+ * # ListCtrl
  * Controller of the addressbookApp
  */
 angular.module('addressbookApp')
-  .controller('MainCtrl', function (Addressbook) {
+  .controller('ListCtrl', function (Addressbook) {
     this.searchInput = '';
     this.addressbook = Addressbook.all();
 
