@@ -23,6 +23,9 @@ angular
         templateUrl: 'views/edit.html',
         controller: 'AddCtrl as editEntry'
       })
+      .when('/edit/:id', {
+        templateUrl: 'views/edit.html',
+        controller: 'EditCtrl as editEntry'
       })
       .when('/about', {
         templateUrl: 'views/about.html',

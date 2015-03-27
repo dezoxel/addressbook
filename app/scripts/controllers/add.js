@@ -11,6 +11,8 @@ angular.module('addressbookApp')
   .controller('AddCtrl', function (Addressbook, $location) {
     var scope = this;
 
+    scope.entry = {};
+
     scope.save = function() {
       Addressbook.add(scope.entry);
       $location.path('/');

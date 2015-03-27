@@ -12,9 +12,9 @@
       <td>{{ entry.name }}</td>
       <td>{{ entry.address }}</td>
       <td>
-        <button type="button" class="btn btn-default btn-sm">
+        <a ng-href="#/edit/{{ entry.id }}" class="btn btn-default btn-sm">
           <span class="glyphicon glyphicon-pencil"></span> Edit
-        </button>
+        </a>
         <button type="button" class="btn btn-danger btn-sm" ng-click="list.deleteEntryBy($index)">
           <span class="glyphicon glyphicon-trash"></span> Delete
         </button>

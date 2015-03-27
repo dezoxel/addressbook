@@ -259,6 +259,17 @@ angular.module('addressbookApp')
       return _data;
     };
 
+    this.find = function(id) {
+      var i = this._findIndexById(id);
+
+      if (i === -1) {
+        console.error('Unable to find entry, not found by id: ' + id);
+        return {};
+      }
+
+      return _data[i];
+    };
+
     this.destroyByIndex = function(i) {
       _data.splice(i, 1);
     };
@@ -268,8 +279,34 @@ angular.module('addressbookApp')
       _data.push(entry);
     };
 
+    this.update = function(entry) {
+      var i = this._findIndexById(entry.id);
+
+      if (i === -1) {
+        console.error('Unable to update entry, not found by id');
+        console.trace(entry);
+        return;
+      }
+
+      // TODO: Check if it will work correctly. Maybe we have to update entry field by field?
+      _data[i] = entry;
+    };
+
     this._generateId = function() {
       return _data.length;
+    };
+
+    this._findIndexById = function(rawId) {
+      var id = parseInt(rawId);
+      var i = _data.length;
+
+      while(i--) {
+        if (_data[i].id === id) {
+          return i;
+        }
+      }
+
+      return -1;
     };
 
   });
