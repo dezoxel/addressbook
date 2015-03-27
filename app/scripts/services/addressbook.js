@@ -263,4 +263,13 @@ angular.module('addressbookApp')
       _data.splice(i, 1);
     };
 
+    this.add = function(entry) {
+      entry.id = this._generateId();
+      _data.push(entry);
+    };
+
+    this._generateId = function() {
+      return _data.length;
+    };
+
   });
