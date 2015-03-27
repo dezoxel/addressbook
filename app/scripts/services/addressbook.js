@@ -270,6 +270,18 @@ angular.module('addressbookApp')
       return _data[i];
     };
 
+    this.destroy = function(entry) {
+      var i = this._findIndexById(entry.id)
+
+      if (i === -1) {
+        console.error('Unable to destroy entry, not found by id');
+        console.trace(entry);
+        return;
+      }
+
+      this.destroyByIndex(i);
+    };
+
     this.destroyByIndex = function(i) {
       _data.splice(i, 1);
     };
