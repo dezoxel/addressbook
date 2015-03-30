@@ -15,7 +15,7 @@
         <a ng-href="#/edit/{{ entry.id }}" class="btn btn-default btn-sm">
           <span class="glyphicon glyphicon-pencil"></span> Edit
         </a>
-        <button type="button" class="btn btn-danger btn-sm" ng-click="list.deleteEntryBy($index)">
+        <button type="button" class="btn btn-danger btn-sm" ng-click="list.destroy(entry.id)">
           <span class="glyphicon glyphicon-trash"></span> Delete
         </button>
       </td>

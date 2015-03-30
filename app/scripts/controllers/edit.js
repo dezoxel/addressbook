@@ -19,7 +19,7 @@ angular.module('addressbookApp')
     };
 
     scope.destroy = function() {
-      Addressbook.destroy(scope.entry);
+      Addressbook.destroy(scope.entry.id);
       $location.path('/');
     };
 });

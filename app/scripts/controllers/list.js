@@ -12,7 +12,7 @@ angular.module('addressbookApp')
     this.searchInput = '';
     this.addressbook = Addressbook.all();
 
-    this.deleteEntryBy = function(i) {
-      Addressbook.destroyByIndex(i);
+    this.destroy = function(id) {
+      Addressbook.destroy(id);
     };
   });
