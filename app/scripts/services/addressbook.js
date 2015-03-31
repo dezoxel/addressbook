@@ -55,7 +55,7 @@ angular.module('addressbookApp')
     };
 
     this.find = function(id) {
-      var i = this._findIndexById(id);
+      var i = _findIndexById(id);
 
       if (i === -1) {
         console.error('Unable to find entry, not found by id: ' + id);
@@ -66,7 +66,7 @@ angular.module('addressbookApp')
     };
 
     this.destroy = function(id) {
-      var i = this._findIndexById(id)
+      var i = _findIndexById(id)
 
       if (i === -1) {
         console.error('Unable to destroy entry, not found by id');
@@ -74,20 +74,16 @@ angular.module('addressbookApp')
         return;
       }
 
-      this._destroyByIndex(i);
-    };
-
-    this._destroyByIndex = function(i) {
-      _data.splice(i, 1);
+      _destroyByIndex(i);
     };
 
     this.add = function(entry) {
-      entry.id = this._generateId();
+      entry.id = _generateId();
       _data.push(entry);
     };
 
     this.update = function(entry) {
-      var i = this._findIndexById(entry.id);
+      var i = _findIndexById(entry.id);
 
       if (i === -1) {
         console.error('Unable to update entry, not found by id');
@@ -99,11 +95,11 @@ angular.module('addressbookApp')
       _data[i] = entry;
     };
 
-    this._generateId = function() {
+    function _generateId() {
       return _data.length;
-    };
+    }
 
-    this._findIndexById = function(rawId) {
+    function _findIndexById(rawId) {
       var id = parseInt(rawId);
       var i = _data.length;
 
@@ -114,6 +110,10 @@ angular.module('addressbookApp')
       }
 
       return -1;
-    };
+    }
+
+    function _destroyByIndex(i) {
+      _data.splice(i, 1);
+    }
 
   });
