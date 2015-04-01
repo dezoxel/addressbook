@@ -2,6 +2,8 @@
 
 angular.module('addressbookApp')
   .service('Addressbook', function() {
+    var Addressbook = this;
+
     var _list = [
       {
         "id": 1,
@@ -50,11 +52,11 @@ angular.module('addressbookApp')
       }
     ];
 
-    this.all = function() {
+    Addressbook.all = function() {
       return _list;
     };
 
-    this.find = function(id) {
+    Addressbook.find = function(id) {
       var i = _findIndexById(id);
 
       if (i === -1) {
@@ -65,7 +67,7 @@ angular.module('addressbookApp')
       return _list[i];
     };
 
-    this.destroy = function(id) {
+    Addressbook.destroy = function(id) {
       var i = _findIndexById(id)
 
       if (i === -1) {
@@ -77,12 +79,12 @@ angular.module('addressbookApp')
       _destroyByIndex(i);
     };
 
-    this.add = function(entry) {
+    Addressbook.add = function(entry) {
       entry.id = _generateId();
       _list.push(entry);
     };
 
-    this.update = function(entry) {
+    Addressbook.update = function(entry) {
       var i = _findIndexById(entry.id);
 
       if (i === -1) {
