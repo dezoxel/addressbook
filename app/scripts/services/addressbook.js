@@ -2,7 +2,7 @@
 
 angular.module('addressbookApp')
   .service('Addressbook', function() {
-    var _data = [
+    var _list = [
       {
         "id": 1,
         "name": "Laura Morin",
@@ -51,7 +51,7 @@ angular.module('addressbookApp')
     ];
 
     this.all = function() {
-      return _data;
+      return _list;
     };
 
     this.find = function(id) {
@@ -62,7 +62,7 @@ angular.module('addressbookApp')
         return {};
       }
 
-      return _data[i];
+      return _list[i];
     };
 
     this.destroy = function(id) {
@@ -79,7 +79,7 @@ angular.module('addressbookApp')
 
     this.add = function(entry) {
       entry.id = _generateId();
-      _data.push(entry);
+      _list.push(entry);
     };
 
     this.update = function(entry) {
@@ -92,19 +92,19 @@ angular.module('addressbookApp')
       }
 
       // TODO: Check if it will work correctly. Maybe we have to update entry field by field?
-      _data[i] = entry;
+      _list[i] = entry;
     };
 
     function _generateId() {
-      return _data.length;
+      return _list.length;
     }
 
     function _findIndexById(rawId) {
       var id = parseInt(rawId);
-      var i = _data.length;
+      var i = _list.length;
 
       while(i--) {
-        if (_data[i].id === id) {
+        if (_list[i].id === id) {
           return i;
         }
       }
@@ -113,7 +113,7 @@ angular.module('addressbookApp')
     }
 
     function _destroyByIndex(i) {
-      _data.splice(i, 1);
+      _list.splice(i, 1);
     }
 
   });
