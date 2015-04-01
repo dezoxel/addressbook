@@ -59,7 +59,11 @@ angular.module('addressbookApp')
     var _list;
 
     function _init() {
-      _list = [
+      _list = _predefinedList();
+    }
+
+    function _predefinedList() {
+      return [
         {
           "id": 1,
           "name": "Laura Morin",
