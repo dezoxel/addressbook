@@ -9,10 +9,12 @@
  */
 angular.module('addressbookApp')
   .controller('ListCtrl', function (Addressbook) {
-    this.searchInput = '';
-    this.addressbook = Addressbook.all();
+    var scope = this;
 
-    this.destroy = function(id) {
+    scope.searchInput = '';
+    scope.addressbook = Addressbook.all();
+
+    scope.destroy = function(id) {
       Addressbook.destroy(id);
     };
   });
