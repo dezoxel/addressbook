@@ -1,4 +1,4 @@
-'use strcit'
+'use strict'
 
 angular.module('addressbookApp')
   .service('Addressbook', function(localStorageService) {
