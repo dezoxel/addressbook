@@ -20,28 +20,14 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
     <div class="container">
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#/">Home</a></li>
-            <li role="presentation"><a href="#/about">About</a></li>
-            <li role="presentation"><a href="#">Contact</a></li>
-          </ul>
-        </nav>
+      <header class="container">
         <h3 class="text-muted">Address Book</h3>
-      </div>
+      </header>
 
       <div ng-view=""></div>
+    </div>
 
-      <footer class="footer">
-        <p>&copy; Dezoxel 2015</p>
-      </footer>
-
-    </div> <!-- /container -->
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
        !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
        (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
@@ -68,7 +54,6 @@
         <script src="scripts/controllers/list.js"></script>
         <script src="scripts/controllers/edit.js"></script>
         <script src="scripts/controllers/add.js"></script>
-        <script src="scripts/controllers/about.js"></script>
         <script src="scripts/services/addressbook.js"></script>
         <!-- endbuild -->
 </body>
