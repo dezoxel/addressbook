@@ -29,7 +29,8 @@
     "time-grunt": "^1.0.0",
     "karma-jasmine": "~0.3.5",
     "grunt-karma": "~0.10.1",
-    "karma-phantomjs-launcher": "~0.1.4"
+    "karma-phantomjs-launcher": "~0.1.4",
+    "grunt-build-control": "~0.3.0"
   },
   "engines": {
     "node": ">=0.10.0"
