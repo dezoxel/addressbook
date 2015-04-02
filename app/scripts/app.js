@@ -14,7 +14,7 @@ angular
       })
       .when('/add', {
         templateUrl: 'views/edit.html',
-        controller: 'AddCtrl as editEntry'
+        controller: 'EditCtrl as editEntry'
       })
       .when('/edit/:id', {
         templateUrl: 'views/edit.html',
