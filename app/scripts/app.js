@@ -11,7 +11,8 @@
 angular
   .module('addressbookApp', [
     'ngRoute',
-    'ngTouch'
+    'ngTouch',
+    'LocalStorageModule'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -34,4 +35,7 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+  .config(['localStorageServiceProvider', function(localStorageServiceProvider){
+    localStorageServiceProvider.setPrefix('addressbook');
+  }]);

@@ -1,7 +1,7 @@
 'use strcit'
 
 angular.module('addressbookApp')
-  .service('Addressbook', function() {
+  .service('Addressbook', function(localStorageService) {
     var Addressbook = this;
 
     //------------------------------------------------------------------------//
@@ -37,6 +37,7 @@ angular.module('addressbookApp')
     Addressbook.add = function(entry) {
       entry.id = _generateId();
       _list.push(entry);
+      _syncWithStorage();
     };
 
     Addressbook.update = function(entry) {
@@ -50,19 +51,23 @@ angular.module('addressbookApp')
 
       // TODO: Check if it will work correctly. Maybe we have to update entry field by field?
       _list[i] = entry;
+      _syncWithStorage();
     };
 
     //------------------------------------------------------------------------//
     // PRIVATE
     //------------------------------------------------------------------------//
     // cached list of addressbook entries
-    var _list;
+    var _list = [];
 
     function _init() {
-      _list = _predefinedList();
+      var listFromStorage = _fetchList();
+      _list = _isNotEmpty(listFromStorage) ? listFromStorage : _predefinedList();
     }
 
     function _predefinedList() {
+      console.info('Use predefined list');
+
       return [
         {
           "id": 1,
@@ -112,6 +117,10 @@ angular.module('addressbookApp')
       ];
     }
 
+    function _fetchList() {
+      return localStorageService.get('list');
+    }
+
     function _generateId() {
       return _list.length;
     }
@@ -129,8 +138,17 @@ angular.module('addressbookApp')
       return -1;
     }
 
+    function _syncWithStorage() {
+      localStorageService.set('list', _list);
+    }
+
     function _destroyByIndex(i) {
       _list.splice(i, 1);
+      _syncWithStorage();
+    }
+
+    function _isNotEmpty(list) {
+      return list && !angular.equals([], list);
     }
 
     //------------------------------------------------------------------------//
