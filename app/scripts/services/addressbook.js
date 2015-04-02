@@ -32,6 +32,7 @@ angular.module('addressbookApp')
       }
 
       _destroyByIndex(i);
+      _syncWithStorage();
     };
 
     Addressbook.add = function(entry) {
@@ -144,7 +145,6 @@ angular.module('addressbookApp')
 
     function _destroyByIndex(i) {
       _list.splice(i, 1);
-      _syncWithStorage();
     }
 
     function _isNotEmpty(list) {
