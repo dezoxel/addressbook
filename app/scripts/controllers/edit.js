@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name addressbookApp.controller:EditCtrl
- * @description
- * # EditCtrl
- * Controller of the addressbookApp
- */
 angular.module('addressbookApp')
   .controller('EditCtrl', function (Addressbook, $routeParams, $location) {
     var scope = this;

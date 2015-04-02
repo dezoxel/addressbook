@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name addressbookApp.controller:ListCtrl
- * @description
- * # ListCtrl
- * Controller of the addressbookApp
- */
 angular.module('addressbookApp')
   .controller('ListCtrl', function (Addressbook) {
     var scope = this;
