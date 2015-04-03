@@ -402,6 +402,17 @@ module.exports = function (grunt) {
           branch: 'gh-pages'
         }
       }
+    },
+
+    plato: {
+      options: {
+        jshint: grunt.file.readJSON('.jshintrc')
+      },
+      default: {
+        files: {
+          'reports/static-analysis': ['app/scripts/**/*.js', 'test/**/*.js']
+        }
+      }
     }
   });
 
