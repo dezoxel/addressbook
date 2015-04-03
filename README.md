@@ -1,6 +1,9 @@
 # Addressbook
 Implementation of simple addressbook on AngularJS
 
+## Live example
+[http://dezoxel.github.io/addressbook](http://dezoxel.github.io/addressbook)
+
 ## Installation
 ```bash
 $ cd /tmp
@@ -24,18 +27,25 @@ Addressbook supports these features:
 - Delete entry
 
 ## TODO
-1. Run on Github Pages
-2. Cover by unit tests
-3. Fix margins & paddings where needed
-4. Travis CI
-5. Test coverage tool
-6. Code static analysis
-7. Google analytics
+1. Cover by unit tests
+2. Fix margins & paddings where needed
+3. Travis CI
+4. Test coverage tool
+5. Google analytics
+
 
 ## Build & development
 
 Run `grunt` for building and `grunt serve` for preview.
 
+Run `grunt plato` for generating code static analysis. Visit reports/static-analysis/index.html in your browser in order
+to see the report.
+
 ## Testing
 
 Running `grunt test` will run the unit tests with karma.
+
+## Deployment
+
+Currently project supports deployment to the Github Pages. Run the `grunt buildcontrol` in order to deploy latest
+version of the code.
