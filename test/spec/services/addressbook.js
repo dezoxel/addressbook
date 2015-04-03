@@ -22,9 +22,19 @@ describe('Addressbook', function () {
 
   describe('#find', function() {
 
-    it('throws an exception if entry is not found');
-    it('returns simple js object in case of success');
-    it('accepts numbers inside string as an ID');
+    it('throws an exception if entry is not found', function() {
+      expect(function() { Addressbook.find(999); }).toThrow();
+    });
+
+    it('returns simple js object containing addressbook entry fields', function() {
+      expect(Addressbook.find(1).id).toBeTruthy();
+      expect(Addressbook.find(1).name).toBeTruthy();
+      expect(Addressbook.find(1).address).toBeTruthy();
+    });
+
+    it('accepts numbers inside string as an ID', function() {
+      expect(Addressbook.find('2').name).toBeTruthy();
+    });
   });
 
   describe('#destroy', function() {

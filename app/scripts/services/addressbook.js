@@ -15,8 +15,7 @@ angular.module('addressbookApp')
       var i = _findIndexById(id);
 
       if (i === -1) {
-        console.error('Unable to find entry, not found by id: ' + id);
-        return {};
+        throw new Error('Addressbook.find(' + id +'): Not found');
       }
 
       return _list[i];
