@@ -39,10 +39,29 @@ describe('Addressbook', function () {
 
   describe('#destroy', function() {
 
-    it('returns "true" if entry was destroyed');
-    it('returns "false" if entry was not destroyed');
-    it('removes the entry from the cached list');
-    it('syncs the cached list with a storage');
+    it('returns "true" if entry was destroyed', function() {
+      expect(Addressbook.destroy(1)).toEqual(true);
+    });
+
+    it('returns "false" if entry was not destroyed', function() {
+      expect(Addressbook.destroy(999)).toEqual(false);
+    });
+
+    it('removes the entry from the cached list', function() {
+      var length = Addressbook.all().length;
+
+      Addressbook.destroy(2);
+
+      expect(Addressbook.all().length).toEqual(length - 1);
+    });
+
+    it('syncs the cached list with a storage', inject(function(localStorageService) {
+      spyOn(localStorageService, 'set');
+
+      Addressbook.destroy(3);
+
+      expect(localStorageService.set).toHaveBeenCalled();
+    }));
   });
 
   describe('#add', function() {

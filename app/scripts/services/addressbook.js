@@ -25,13 +25,14 @@ angular.module('addressbookApp')
       var i = _findIndexById(id);
 
       if (i === -1) {
-        console.error('Unable to destroy entry, not found by id');
-        console.trace(id);
-        return;
+        console.error('Unable to destroy entry, not found by id: ' + id);
+        return false;
       }
 
       _destroyByIndex(i);
       _syncWithStorage();
+
+      return true;
     };
 
     Addressbook.add = function(entry) {
