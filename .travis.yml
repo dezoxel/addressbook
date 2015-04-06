@@ -4,9 +4,11 @@ node_js:
   - '0.10'
 install:
   - npm install -g npm@2
-  - npm install -g bower grunt-cli
+  - npm install -g bower grunt-cli coveralls
   - npm install
   - bower install
 script:
   - grunt test
   - grunt build
+after_script:
+  - cat ./reports/test-coverage/**/lcov.info | coveralls"

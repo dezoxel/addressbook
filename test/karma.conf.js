@@ -59,7 +59,7 @@ module.exports = function(config) {
     },
 
     coverageReporter: {
-      type: 'html',
+      type: 'lcov',
       dir: 'reports/test-coverage'
     },
 
