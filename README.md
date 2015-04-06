@@ -1,7 +1,5 @@
-# Addressbook
+# Addressbook [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
 Implementation of simple addressbook on AngularJS
-
-> [![Build Status](https://travis-ci.org/dezoxel/addressbook.png?branch=master)](https://travis-ci.org/dezoxel/addressbook)
 
 ## Requirements notices
 - Application is not optimized for big collections as this was not a requirement
@@ -38,6 +36,7 @@ Addressbook supports these features:
 2. Fix margins & paddings where needed
 3. Google analytics
 4. [Test coverage CI](https://coveralls.io/)
+5. Static analysis CI
 
 
 ## Build & development
@@ -57,3 +56,8 @@ Tests are following [BetterSpecs](http://betterspecs.org/) guidelines.
 
 Currently project supports deployment to the Github Pages. Run the `grunt buildcontrol` in order to deploy latest
 version of the code.
+
+[travis-image]: https://travis-ci.org/dezoxel/addressbook.png?branch=master
+[travis-url]: https://travis-ci.org/dezoxel/addressbook
+[coveralls-image]: https://coveralls.io/repos/dezoxel/addressbook/badge.svg
+[coveralls-url]: https://coveralls.io/r/dezoxel/addressbook

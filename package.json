@@ -32,7 +32,8 @@
     "karma-phantomjs-launcher": "~0.1.4",
     "grunt-build-control": "~0.3.0",
     "grunt-plato": "~1.2.1",
-    "karma-coverage": "~0.2.7"
+    "karma-coverage": "~0.2.7",
+    "grunt-karma-coveralls": "~2.5.3"
   },
   "engines": {
     "node": ">=0.10.0"

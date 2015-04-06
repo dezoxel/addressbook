@@ -413,6 +413,13 @@ module.exports = function (grunt) {
           'reports/static-analysis': ['app/scripts/**/*.js', 'test/**/*.js']
         }
       }
+    },
+
+    coveralls: {
+      options: {
+        coverageDir: 'reports/test-coverage',
+        recursive: true
+      }
     }
   });
 
