@@ -67,6 +67,8 @@ angular.module('addressbookApp')
     }
 
     function _predefinedList() {
+      // intentioal log output, we need to know when predefined list is used or
+      // user is using local storage
       console.info('Use predefined list');
 
       return [
@@ -126,6 +128,8 @@ angular.module('addressbookApp')
       return _list.length;
     }
 
+    // Improve the algorithm here if performance issues occured or we have to work
+    // with big lists
     function _findIndexById(rawId) {
       var id = parseInt(rawId);
       var i = _list.length;
