@@ -34,7 +34,7 @@
     "grunt-plato": "~1.2.1",
     "karma-coverage": "~0.2.7",
     "grunt-karma-coveralls": "~2.5.3",
-    "grunt-codeclimate-reporter": "~1.0.0"
+    "grunt-codeclimate": "0.0.1-1"
   },
   "engines": {
     "node": ">=0.10.0"
