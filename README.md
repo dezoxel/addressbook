@@ -39,11 +39,13 @@ Addressbook supports these features:
 Run `grunt` for building and `grunt serve` for preview.
 
 Run `grunt plato` for generating code static analysis. Visit reports/static-analysis/index.html in your browser in order
-to see the report.
+to see the report. Currently code is ~75% (74.84) maintainable according to [Plato](https://www.npmjs.com/package/plato).
 
 ## Testing
 
 Running `grunt test` will run the unit tests with karma.
+
+Tests are following [BetterSpecs](http://betterspecs.org/) guidelines.
 
 ## Deployment
 
