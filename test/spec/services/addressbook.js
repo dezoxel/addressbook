@@ -104,11 +104,47 @@ describe('Addressbook', function () {
 
   describe('#update', function() {
 
-    it('throws an exception if entry is not found');
-    it('throws an exception if entry is not valid');
-    it('returns the updated entry');
-    it('updates the entry inside the cached list');
-    it('syncs a cached list with a storage');
+    var notValidEntry = {};
+    var validEntry = {};
+
+    beforeEach(function() {
+      notValidEntry = {some: 'weird', properties: 'here'};
+      validEntry = {id: 5, name: 'Elmo Frazier', address: '4989 Proin Rd.'};
+    });
+
+    it('throws an exception if entry is not found', function() {
+      var noSuchEntry = {id: 123, name: 'Elmo Frazier', address: '4989 Proin Rd.'};
+      expect(function() { Addressbook.update(noSuchEntry); }).toThrow();
+    });
+
+    it('throws an exception if entry is not valid', function() {
+      expect(function() { Addressbook.update(notValidEntry); }).toThrow();
+    });
+
+    // TODO: Avoid three expectations
+    it('returns the updated entry', function() {
+      var updatedEntry = Addressbook.update(validEntry);
+
+      expect(updatedEntry.name).toEqual(validEntry.name);
+      expect(updatedEntry.address).toEqual(validEntry.address);
+      expect(updatedEntry.id).toEqual(validEntry.id);
+    });
+
+    it('updates the entry inside the cached list', function() {
+      Addressbook.update(validEntry);
+
+      var updatedEntry = Addressbook.find(validEntry.id);
+      expect(updatedEntry).toEqual(validEntry);
+    });
+
+    it('syncs a cached list with a storage', inject(function(localStorageService) {
+      spyOn(localStorageService, 'set');
+
+      Addressbook.update(validEntry);
+
+      expect(localStorageService.set).toHaveBeenCalled();
+    }));
+
   });
 
 });

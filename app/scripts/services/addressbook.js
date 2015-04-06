@@ -49,17 +49,21 @@ angular.module('addressbookApp')
 
 
     Addressbook.update = function(entry) {
+      if (!_isValid(entry)) {
+        throw new Error('Addressbook.update: Entry is not valid: ', entry);
+      }
+
       var i = _findIndexById(entry.id);
 
       if (i === -1) {
-        console.error('Unable to update entry, not found by id');
-        console.trace(entry);
-        return;
+        throw new Error('Unable to update entry by id: "' + entry.id + '": Not found', entry);
       }
 
       // TODO: Check if it will work correctly. Maybe we have to update entry field by field?
       _list[i] = entry;
       _syncWithStorage();
+
+      return entry;
     };
 
     //------------------------------------------------------------------------//
