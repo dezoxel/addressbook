@@ -36,9 +36,8 @@ Addressbook supports these features:
 ## TODO
 1. Cover by unit tests
 2. Fix margins & paddings where needed
-3. Travis CI
-4. Test coverage tool
-5. Google analytics
+3. Google analytics
+4. [Test coverage CI](https://coveralls.io/)
 
 
 ## Build & development
