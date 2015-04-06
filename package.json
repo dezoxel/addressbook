@@ -33,7 +33,8 @@
     "grunt-build-control": "~0.3.0",
     "grunt-plato": "~1.2.1",
     "karma-coverage": "~0.2.7",
-    "grunt-karma-coveralls": "~2.5.3"
+    "grunt-karma-coveralls": "~2.5.3",
+    "grunt-codeclimate-reporter": "~1.0.0"
   },
   "engines": {
     "node": ">=0.10.0"

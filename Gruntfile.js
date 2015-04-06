@@ -420,6 +420,13 @@ module.exports = function (grunt) {
         coverageDir: 'reports/test-coverage',
         recursive: true
       }
+    },
+
+    codeclimate: {
+      options: {
+        file: 'reports/test-coverage/lcov.info',
+        token: '34ae42720b1d686989d2dab1f9fb6abb41b549279fcb5b4f769d134437613c30'
+      }
     }
   });
 

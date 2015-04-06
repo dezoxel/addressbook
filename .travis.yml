@@ -12,3 +12,4 @@ script:
   - grunt build
 after_script:
   - grunt coveralls
+  - grunt codeclimate
