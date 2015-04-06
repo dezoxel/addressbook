@@ -1,4 +1,4 @@
-# Addressbook [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
+# Addressbook [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Code Climate][codeclimate-image]][codeclimate-url]
 Implementation of simple addressbook on AngularJS
 
 ## Requirements notices
@@ -35,8 +35,6 @@ Addressbook supports these features:
 1. Cover by unit tests
 2. Fix margins & paddings where needed
 3. Google analytics
-4. [Test coverage CI](https://coveralls.io/)
-5. Static analysis CI
 
 
 ## Build & development
@@ -61,3 +59,5 @@ version of the code.
 [travis-url]: https://travis-ci.org/dezoxel/addressbook
 [coveralls-image]: https://coveralls.io/repos/dezoxel/addressbook/badge.svg
 [coveralls-url]: https://coveralls.io/r/dezoxel/addressbook
+[codeclimate-image]: https://codeclimate.com/repos/5522ad486956806eb60045c4/badges/099e87585f06d5605e20/gpa.svg
+[codeclimate-url]: https://codeclimate.com/repos/5522ad486956806eb60045c4/feed
