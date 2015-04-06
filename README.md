@@ -1,6 +1,11 @@
 # Addressbook
 Implementation of simple addressbook on AngularJS
 
+## Requirements notices
+- Application is not optimized for big collections as this was not a requirement
+- You can easily optimize the performance if needed, because algorithm is placed in the one method
+- Application UI is not rich because there was not a requirement
+
 ## Live example
 [http://dezoxel.github.io/addressbook](http://dezoxel.github.io/addressbook)
 
