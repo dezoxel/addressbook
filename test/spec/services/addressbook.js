@@ -7,17 +7,54 @@ describe('Addressbook', function () {
   var Addressbook;
   beforeEach(inject(function(_Addressbook_) {
     Addressbook = _Addressbook_;
+    Addressbook.reset();
   }));
 
-  describe('when storage is empty', function() {
+  describe('#all', function() {
 
-    it('fetches predefined list of addressbook entries');
-    it('has predefined list with 10 entries by default');
+    function destroyAll(entries) {
+      var i = entries.length;
+      while(i--) {
+        Addressbook.destroy(entries[i].id);
+      }
+    }
 
-  });
+    it('returns empty array if no entries found', function() {
+      var entries = Addressbook.all();
 
-  describe('when storage is not empty', function() {
-    it('uses local storage as a backend');
+      destroyAll(entries);
+
+      expect(Addressbook.all()).toEqual([]);
+    });
+
+    describe('when storage is empty', function() {
+
+      it('fetches predefined list of addressbook entries', function() {
+        expect(Addressbook.all()).toContain({
+          'id': 1,
+          'name': 'Laura Morin',
+          'address': 'P.O. Box 825, 7962 Ante, Ave'
+        });
+      });
+
+      it('has predefined list with 9 entries by default', function() {
+        expect(Addressbook.all().length).toBe(9);
+      });
+
+    });
+
+    describe('when storage is not empty', function() {
+
+      it('uses local storage as a backend', inject(function(localStorageService) {
+        spyOn(localStorageService, 'get');
+
+        // this method is called on the init stage
+        Addressbook.reset();
+
+        expect(localStorageService.get).toHaveBeenCalledWith('list');
+      }));
+    });
+
   });
 
   describe('#find', function() {
