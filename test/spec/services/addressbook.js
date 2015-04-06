@@ -45,13 +45,22 @@ describe('Addressbook', function () {
 
     describe('when storage is not empty', function() {
 
-      it('uses local storage as a backend', inject(function(localStorageService) {
-        spyOn(localStorageService, 'get');
+      var fakeLocalStorageList = [];
 
-        // this method is called on the init stage
+      beforeEach(inject(function(localStorageService) {
+        fakeLocalStorageList = [{id: 1, name: 'Test', address: 'Hello'}];
+
+        spyOn(localStorageService, 'get').and.callFake(function() {
+          return fakeLocalStorageList;
+        });
+
+      }));
+
+      it('uses local storage as a backend', inject(function(localStorageService) {
+        // force clean cache and sync with storage
         Addressbook.reset();
 
-        expect(localStorageService.get).toHaveBeenCalledWith('list');
+        expect(Addressbook.all()).toEqual(fakeLocalStorageList);
       }));
     });
 
