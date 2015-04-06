@@ -172,8 +172,8 @@ angular.module('addressbookApp')
 
     // Add move validations here
     function _isValid(entry) {
-      var isValidName = entry.name && typeof entry.name === 'string' && entry.name != '';
-      var isValidAddress = entry.address && typeof entry.address === 'string' && entry.address != '';
+      var isValidName = entry.name && typeof entry.name === 'string' && entry.name !== '';
+      var isValidAddress = entry.address && typeof entry.address === 'string' && entry.address !== '';
 
       return isValidName && isValidAddress;
     }
