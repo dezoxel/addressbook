@@ -55,7 +55,7 @@ describe('Addressbook', function () {
       expect(Addressbook.all().length).toEqual(length - 1);
     });
 
-    it('syncs the cached list with a storage', inject(function(localStorageService) {
+    it('syncs a cached list with a storage', inject(function(localStorageService) {
       spyOn(localStorageService, 'set');
 
       Addressbook.destroy(3);
@@ -66,10 +66,40 @@ describe('Addressbook', function () {
 
   describe('#add', function() {
 
-    it('throws an exception if entry is not valid');
-    it('returns the added entry');
-    it('adds the entry to the cached list');
-    it('syncs the cached list with a storage');
+    var notValidEntry = {};
+    var validEntry = {};
+
+    beforeEach(function() {
+      notValidEntry = {some: 'weird', properties: 'here'};
+      validEntry = {name: 'Elmo Frazier', address: '4989 Proin Rd.'};
+    });
+
+    it('throws an exception if entry is not valid', function() {
+      expect(function() { Addressbook.add(notValidEntry); }).toThrow();
+    });
+
+    // TODO: Avoid three expectations
+    it('returns the added entry', function() {
+      var addedEntry = Addressbook.add(validEntry);
+
+      expect(addedEntry.name).toEqual(validEntry.name);
+      expect(addedEntry.address).toEqual(validEntry.address);
+      expect(addedEntry.id).toBeDefined();
+    });
+
+    it('adds the entry to the cached list', function() {
+      Addressbook.add(validEntry);
+      var lastEntry = Addressbook.all()[Addressbook.all().length - 1];
+      expect(lastEntry).toEqual(validEntry);
+    });
+
+    it('syncs a cached list with a storage', inject(function(localStorageService) {
+      spyOn(localStorageService, 'set');
+
+      Addressbook.add(validEntry);
+
+      expect(localStorageService.set).toHaveBeenCalled();
+    }));
   });
 
   describe('#update', function() {
@@ -78,7 +108,7 @@ describe('Addressbook', function () {
     it('throws an exception if entry is not valid');
     it('returns the updated entry');
     it('updates the entry inside the cached list');
-    it('syncs the cached list with a storage');
+    it('syncs a cached list with a storage');
   });
 
 });

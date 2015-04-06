@@ -36,10 +36,17 @@ angular.module('addressbookApp')
     };
 
     Addressbook.add = function(entry) {
+      if (!_isValid(entry)) {
+        throw new Error('Addressbook.add: Entry is not valid: ', entry);
+      }
+
       entry.id = _generateId();
       _list.push(entry);
       _syncWithStorage();
+
+      return entry;
     };
+
 
     Addressbook.update = function(entry) {
       var i = _findIndexById(entry.id);
@@ -153,6 +160,14 @@ angular.module('addressbookApp')
 
     function _isNotEmpty(list) {
       return list && !angular.equals([], list);
+    }
+
+    // Add move validations here
+    function _isValid(entry) {
+      var isValidName = entry.name && typeof entry.name === 'string' && entry.name != '';
+      var isValidAddress = entry.address && typeof entry.address === 'string' && entry.address != '';
+
+      return isValidName && isValidAddress;
     }
 
     //------------------------------------------------------------------------//
