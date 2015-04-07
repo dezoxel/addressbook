@@ -29,7 +29,14 @@ describe('Addressbook', function () {
 
     describe('when storage is empty', function() {
 
-      it('fetches predefined list of addressbook entries', function() {
+      beforeEach(inject(function(localStorageService) {
+
+        localStorageService.set([]);
+      }));
+
+      it('uses predefined list and stores it', function() {
+        Addressbook.reset();
+
         expect(Addressbook.all()).toContain({
           'id': 1,
           'name': 'Laura Morin',

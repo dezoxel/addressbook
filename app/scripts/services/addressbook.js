@@ -67,7 +67,9 @@ angular.module('addressbookApp')
     };
 
     Addressbook.reset = function() {
-      _init();
+      _list = _predefinedList();
+      _syncWithStorage();
+      _list = localStorageService.get('list');
     };
 
     //------------------------------------------------------------------------//
@@ -77,8 +79,7 @@ angular.module('addressbookApp')
     var _list = [];
 
     function _init() {
-      var listFromStorage = _fetchList();
-      _list = _isNotEmpty(listFromStorage) ? listFromStorage : _predefinedList();
+      _fetchList();
     }
 
     function _predefinedList() {
@@ -136,7 +137,14 @@ angular.module('addressbookApp')
     }
 
     function _fetchList() {
-      return localStorageService.get('list');
+      var listFromStorage = localStorageService.get('list');
+
+      if (_isEmpty(listFromStorage)) {
+        // put the predefined list to the storage
+        Addressbook.reset();
+      }
+
+      _list = localStorageService.get('list');
     }
 
     function _generateId() {
@@ -166,8 +174,8 @@ angular.module('addressbookApp')
       _list.splice(i, 1);
     }
 
-    function _isNotEmpty(list) {
-      return list && !angular.equals([], list);
+    function _isEmpty(list) {
+      return !list || angular.equals([], list);
     }
 
     // Add move validations here
