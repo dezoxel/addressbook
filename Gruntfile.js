@@ -410,7 +410,7 @@ module.exports = function (grunt) {
       },
       default: {
         files: {
-          'reports/static-analysis': ['app/scripts/**/*.js', 'test/**/*.js']
+          'reports/static-analysis': ['app/scripts/**/*.js']
         }
       }
     },
