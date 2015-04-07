@@ -56,12 +56,12 @@ describe('Addressbook', function () {
 
       }));
 
-      it('uses local storage as a backend', inject(function(localStorageService) {
+      it('uses local storage as a backend', function() {
         // force clean cache and sync with storage
         Addressbook.reset();
 
         expect(Addressbook.all()).toEqual(fakeLocalStorageList);
-      }));
+      });
     });
 
   });

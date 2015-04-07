@@ -1,22 +1,30 @@
 'use strict';
 
-describe('Controller: ListCtrl', function () {
+describe('ListCtrl', function () {
 
-  // load the controller's module
   beforeEach(module('addressbookApp'));
 
-  var ListCtrl,
-    scope;
+  var listCtrl, Addressbook;
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    ListCtrl = $controller('ListCtrl', {
-      $scope: scope
-    });
+  beforeEach(inject(function ($controller, $rootScope, _Addressbook_) {
+    Addressbook = _Addressbook_;
+
+    listCtrl = $controller('ListCtrl', {Addressbook: Addressbook});
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(true).toBe(true);
+  it('sets search input to empty', function() {
+    expect(listCtrl.searchInput).toBe('');
+  });
+
+  it('fetches the list of all addressbook entries', function() {
+    expect(listCtrl.addressbook.length).toBe(9);
+  });
+
+  it('has ability to destroy entry', function() {
+    spyOn(Addressbook, 'destroy');
+
+    listCtrl.destroy(5);
+
+    expect(Addressbook.destroy).toHaveBeenCalledWith(5);
   });
 });
