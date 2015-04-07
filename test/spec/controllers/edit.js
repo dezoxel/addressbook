@@ -80,6 +80,22 @@ describe('EditCtrl', function () {
 
       expect($location.path).toHaveBeenCalledWith('/');
     });
+
+    describe('when record is not found', function() {
+
+      beforeEach(inject(function($controller) {
+
+        ctrl = $controller('EditCtrl', {
+          Addressbook: Addressbook,
+          $routeParams: {id: 999},
+          $location: $location
+        });
+      }));
+
+      it('redirects to the list', function() {
+        expect($location.path).toHaveBeenCalledWith('/');
+      });
+    });
   });
 
   describe('when destroy', function() {

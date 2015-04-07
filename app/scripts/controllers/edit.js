@@ -8,7 +8,14 @@ angular.module('addressbookApp')
 
     // edit entry action
     if ($routeParams.id) {
-      scope.entry = Addressbook.find($routeParams.id);
+      try {
+        scope.entry = Addressbook.find($routeParams.id);
+      } catch (e) {
+        // TODO: Implement flash messaging for user instead of logging
+        console.error('Unable to find entry with id "' + $routeParams.id + '"');
+
+        $location.path('/');
+      }
     }
 
     scope.edit = function(entry) {
