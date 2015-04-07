@@ -425,7 +425,7 @@ module.exports = function (grunt) {
     codeclimate: {
       options: {
         file: 'reports/test-coverage/lcov.info',
-        token: '34ae42720b1d686989d2dab1f9fb6abb41b549279fcb5b4f769d134437613c30'
+        token: '0d3c8834fcb2ffc1c5521bbb97bd39ea8f61ab149681480166009f22860bb174'
       }
     }
   });

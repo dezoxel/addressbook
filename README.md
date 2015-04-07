@@ -32,9 +32,10 @@ Addressbook supports these features:
 - Delete entry
 
 ## TODO
-1. Cover by unit tests
-2. Fix margins & paddings where needed
-3. Google analytics
+1. Controllers: cover by unit tests
+2. E2E tests
+3. Fix margins & paddings where needed
+4. Google analytics
 
 
 ## Build & development
@@ -59,5 +60,5 @@ version of the code.
 [travis-url]: https://travis-ci.org/dezoxel/addressbook
 [coveralls-image]: https://coveralls.io/repos/dezoxel/addressbook/badge.svg
 [coveralls-url]: https://coveralls.io/r/dezoxel/addressbook
-[codeclimate-image]: https://codeclimate.com/repos/5522ad486956806eb60045c4/badges/099e87585f06d5605e20/gpa.svg
-[codeclimate-url]: https://codeclimate.com/repos/5522ad486956806eb60045c4/feed
+[codeclimate-image]: https://codeclimate.com/github/dezoxel/addressbook/badges/gpa.svg
+[codeclimate-url]: https://codeclimate.com/github/dezoxel/addressbook
