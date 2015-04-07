@@ -83,10 +83,6 @@ angular.module('addressbookApp')
     }
 
     function _predefinedList() {
-      // intentioal log output, we need to know when predefined list is used or
-      // user is using local storage
-      console.info('Use predefined list');
-
       return [
         {
           'id': 1,
