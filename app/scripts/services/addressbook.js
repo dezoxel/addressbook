@@ -1,27 +1,27 @@
 'use strict';
 
 angular.module('addressbookApp')
-  .service('Addressbook', function(localStorageService) {
-    var Addressbook = this;
+  .service('addressbook', function(localStorageService) {
+    var addressbook = this;
 
     //------------------------------------------------------------------------//
     // PUBLIC
     //------------------------------------------------------------------------//
-    Addressbook.all = function() {
+    addressbook.all = function() {
       return _list;
     };
 
-    Addressbook.find = function(id) {
+    addressbook.find = function(id) {
       var i = _findIndexById(id);
 
       if (i === -1) {
-        throw new Error('Addressbook.find(' + id +'): Not found');
+        throw new Error('addressbook.find(' + id +'): Not found');
       }
 
       return _list[i];
     };
 
-    Addressbook.destroy = function(id) {
+    addressbook.destroy = function(id) {
       var i = _findIndexById(id);
 
       if (i === -1) {
@@ -35,9 +35,9 @@ angular.module('addressbookApp')
       return true;
     };
 
-    Addressbook.add = function(entry) {
+    addressbook.add = function(entry) {
       if (!_isValid(entry)) {
-        throw new Error('Addressbook.add: Entry is not valid: ', entry);
+        throw new Error('addressbook.add: Entry is not valid: ', entry);
       }
 
       entry.id = _generateId();
@@ -48,9 +48,9 @@ angular.module('addressbookApp')
     };
 
 
-    Addressbook.update = function(entry) {
+    addressbook.update = function(entry) {
       if (!_isValid(entry)) {
-        throw new Error('Addressbook.update: Entry is not valid: ', entry);
+        throw new Error('addressbook.update: Entry is not valid: ', entry);
       }
 
       var i = _findIndexById(entry.id);
@@ -59,14 +59,13 @@ angular.module('addressbookApp')
         throw new Error('Unable to update entry by id: "' + entry.id + '": Not found', entry);
       }
 
-      // TODO: Check if it will work correctly. Maybe we have to update entry field by field?
       _list[i] = entry;
       _syncWithStorage();
 
       return entry;
     };
 
-    Addressbook.reset = function() {
+    addressbook.reset = function() {
       _list = _predefinedList();
       _syncWithStorage();
       _list = localStorageService.get('list');
@@ -137,7 +136,7 @@ angular.module('addressbookApp')
 
       if (_isEmpty(listFromStorage)) {
         // put the predefined list to the storage
-        Addressbook.reset();
+        addressbook.reset();
       }
 
       _list = localStorageService.get('list');

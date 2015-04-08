@@ -32,8 +32,9 @@ If browser was not opened, please open the [http://localhost:9000](http://localh
 - Delete
 
 ## TODO
+1. Implement flash messaging
 2. Make protection of adding entries after 200 addresses
-3. Add support for promises in Addressbook service
+3. Add support for promises in **addressbook** service
 4. E2E tests
 5. Fix margins & paddings where needed
 6. Google analytics

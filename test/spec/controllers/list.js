@@ -4,13 +4,13 @@ describe('ListCtrl', function () {
 
   beforeEach(module('addressbookApp'));
 
-  var ctrl, Addressbook;
+  var ctrl, addressbook;
 
-  beforeEach(inject(function ($controller, $rootScope, _Addressbook_) {
-    Addressbook = _Addressbook_;
-    Addressbook.reset();
+  beforeEach(inject(function ($controller, $rootScope, _addressbook_) {
+    addressbook = _addressbook_;
+    addressbook.reset();
 
-    ctrl = $controller('ListCtrl', {Addressbook: Addressbook});
+    ctrl = $controller('ListCtrl', {addressbook: addressbook});
   }));
 
   it('sets search input to empty', function() {
@@ -22,10 +22,10 @@ describe('ListCtrl', function () {
   });
 
   it('has ability to destroy entry', function() {
-    spyOn(Addressbook, 'destroy');
+    spyOn(addressbook, 'destroy');
 
     ctrl.destroy(5);
 
-    expect(Addressbook.destroy).toHaveBeenCalledWith(5);
+    expect(addressbook.destroy).toHaveBeenCalledWith(5);
   });
 });

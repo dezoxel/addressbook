@@ -1,13 +1,13 @@
 'use strict';
 
-describe('Addressbook', function () {
+describe('addressbook', function () {
 
   beforeEach(module('addressbookApp'));
 
-  var Addressbook;
-  beforeEach(inject(function(_Addressbook_) {
-    Addressbook = _Addressbook_;
-    Addressbook.reset();
+  var addressbook;
+  beforeEach(inject(function(_addressbook_) {
+    addressbook = _addressbook_;
+    addressbook.reset();
   }));
 
   describe('#all', function() {
@@ -15,16 +15,16 @@ describe('Addressbook', function () {
     function destroyAll(entries) {
       var i = entries.length;
       while(i--) {
-        Addressbook.destroy(entries[i].id);
+        addressbook.destroy(entries[i].id);
       }
     }
 
     it('returns empty array if no entries found', function() {
-      var entries = Addressbook.all();
+      var entries = addressbook.all();
 
       destroyAll(entries);
 
-      expect(Addressbook.all()).toEqual([]);
+      expect(addressbook.all()).toEqual([]);
     });
 
     describe('when storage is empty', function() {
@@ -35,9 +35,9 @@ describe('Addressbook', function () {
       }));
 
       it('uses predefined list and stores it', function() {
-        Addressbook.reset();
+        addressbook.reset();
 
-        expect(Addressbook.all()).toContain({
+        expect(addressbook.all()).toContain({
           'id': 1,
           'name': 'Laura Morin',
           'address': 'P.O. Box 825, 7962 Ante, Ave'
@@ -45,7 +45,7 @@ describe('Addressbook', function () {
       });
 
       it('has predefined list with 9 entries by default', function() {
-        expect(Addressbook.all().length).toBe(9);
+        expect(addressbook.all().length).toBe(9);
       });
 
     });
@@ -65,9 +65,9 @@ describe('Addressbook', function () {
 
       it('uses local storage as a backend', function() {
         // force clean cache and sync with storage
-        Addressbook.reset();
+        addressbook.reset();
 
-        expect(Addressbook.all()).toEqual(fakeLocalStorageList);
+        expect(addressbook.all()).toEqual(fakeLocalStorageList);
       });
     });
 
@@ -76,42 +76,42 @@ describe('Addressbook', function () {
   describe('#find', function() {
 
     it('throws an exception if entry is not found', function() {
-      expect(function() { Addressbook.find(999); }).toThrow();
+      expect(function() { addressbook.find(999); }).toThrow();
     });
 
     it('returns simple js object containing addressbook entry fields', function() {
-      expect(Addressbook.find(1).id).toBeTruthy();
-      expect(Addressbook.find(1).name).toBeTruthy();
-      expect(Addressbook.find(1).address).toBeTruthy();
+      expect(addressbook.find(1).id).toBeTruthy();
+      expect(addressbook.find(1).name).toBeTruthy();
+      expect(addressbook.find(1).address).toBeTruthy();
     });
 
     it('accepts numbers inside string as an ID', function() {
-      expect(Addressbook.find('2').name).toBeTruthy();
+      expect(addressbook.find('2').name).toBeTruthy();
     });
   });
 
   describe('#destroy', function() {
 
     it('returns "true" if entry was destroyed', function() {
-      expect(Addressbook.destroy(1)).toEqual(true);
+      expect(addressbook.destroy(1)).toEqual(true);
     });
 
     it('returns "false" if entry was not destroyed', function() {
-      expect(Addressbook.destroy(999)).toEqual(false);
+      expect(addressbook.destroy(999)).toEqual(false);
     });
 
     it('removes the entry from the cached list', function() {
-      var length = Addressbook.all().length;
+      var length = addressbook.all().length;
 
-      Addressbook.destroy(2);
+      addressbook.destroy(2);
 
-      expect(Addressbook.all().length).toEqual(length - 1);
+      expect(addressbook.all().length).toEqual(length - 1);
     });
 
     it('syncs a cached list with a storage', inject(function(localStorageService) {
       spyOn(localStorageService, 'set');
 
-      Addressbook.destroy(3);
+      addressbook.destroy(3);
 
       expect(localStorageService.set).toHaveBeenCalled();
     }));
@@ -128,12 +128,12 @@ describe('Addressbook', function () {
     });
 
     it('throws an exception if entry is not valid', function() {
-      expect(function() { Addressbook.add(notValidEntry); }).toThrow();
+      expect(function() { addressbook.add(notValidEntry); }).toThrow();
     });
 
     // TODO: Avoid three expectations
     it('returns the added entry', function() {
-      var addedEntry = Addressbook.add(validEntry);
+      var addedEntry = addressbook.add(validEntry);
 
       expect(addedEntry.name).toEqual(validEntry.name);
       expect(addedEntry.address).toEqual(validEntry.address);
@@ -141,15 +141,15 @@ describe('Addressbook', function () {
     });
 
     it('adds the entry to the cached list', function() {
-      Addressbook.add(validEntry);
-      var lastEntry = Addressbook.all()[Addressbook.all().length - 1];
+      addressbook.add(validEntry);
+      var lastEntry = addressbook.all()[addressbook.all().length - 1];
       expect(lastEntry).toEqual(validEntry);
     });
 
     it('syncs a cached list with a storage', inject(function(localStorageService) {
       spyOn(localStorageService, 'set');
 
-      Addressbook.add(validEntry);
+      addressbook.add(validEntry);
 
       expect(localStorageService.set).toHaveBeenCalled();
     }));
@@ -167,16 +167,16 @@ describe('Addressbook', function () {
 
     it('throws an exception if entry is not found', function() {
       var noSuchEntry = {id: 123, name: 'Elmo Frazier', address: '4989 Proin Rd.'};
-      expect(function() { Addressbook.update(noSuchEntry); }).toThrow();
+      expect(function() { addressbook.update(noSuchEntry); }).toThrow();
     });
 
     it('throws an exception if entry is not valid', function() {
-      expect(function() { Addressbook.update(notValidEntry); }).toThrow();
+      expect(function() { addressbook.update(notValidEntry); }).toThrow();
     });
 
     // TODO: Avoid three expectations
     it('returns the updated entry', function() {
-      var updatedEntry = Addressbook.update(validEntry);
+      var updatedEntry = addressbook.update(validEntry);
 
       expect(updatedEntry.name).toEqual(validEntry.name);
       expect(updatedEntry.address).toEqual(validEntry.address);
@@ -184,16 +184,16 @@ describe('Addressbook', function () {
     });
 
     it('updates the entry inside the cached list', function() {
-      Addressbook.update(validEntry);
+      addressbook.update(validEntry);
 
-      var updatedEntry = Addressbook.find(validEntry.id);
+      var updatedEntry = addressbook.find(validEntry.id);
       expect(updatedEntry).toEqual(validEntry);
     });
 
     it('syncs a cached list with a storage', inject(function(localStorageService) {
       spyOn(localStorageService, 'set');
 
-      Addressbook.update(validEntry);
+      addressbook.update(validEntry);
 
       expect(localStorageService.set).toHaveBeenCalled();
     }));

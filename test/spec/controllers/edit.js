@@ -2,7 +2,7 @@
 
 describe('EditCtrl', function () {
 
-  var ctrl, $location, Addressbook;
+  var ctrl, $location, addressbook;
 
   beforeEach(module('addressbookApp'));
 
@@ -15,10 +15,10 @@ describe('EditCtrl', function () {
     var entry = {};
 
     beforeEach(inject(function ($controller) {
-      Addressbook = jasmine.createSpyObj('Addressbook', ['add']);
+      addressbook = jasmine.createSpyObj('addressbook', ['add']);
 
       ctrl = $controller('EditCtrl', {
-        Addressbook: Addressbook,
+        addressbook: addressbook,
         $routeParams: {},
         $location: $location
       });
@@ -33,7 +33,7 @@ describe('EditCtrl', function () {
     it('adds entry to the list', function() {
       ctrl.add(entry);
 
-      expect(Addressbook.add).toHaveBeenCalledWith(entry);
+      expect(addressbook.add).toHaveBeenCalledWith(entry);
     });
 
     it('redirects to the list controller', function() {
@@ -47,13 +47,13 @@ describe('EditCtrl', function () {
 
     var entry = {};
 
-    beforeEach(inject(function ($controller, _Addressbook_) {
-      Addressbook = _Addressbook_;
+    beforeEach(inject(function ($controller, _addressbook_) {
+      addressbook = _addressbook_;
 
-      spyOn(Addressbook, 'update');
+      spyOn(addressbook, 'update');
 
       ctrl = $controller('EditCtrl', {
-        Addressbook: Addressbook,
+        addressbook: addressbook,
         $routeParams: {id: 1},
         $location: $location
       });
@@ -72,7 +72,7 @@ describe('EditCtrl', function () {
     it('updates entry in the list', function() {
       ctrl.edit(entry);
 
-      expect(Addressbook.update).toHaveBeenCalledWith(entry);
+      expect(addressbook.update).toHaveBeenCalledWith(entry);
     });
 
     it('redirects to the list controller', function() {
@@ -86,7 +86,7 @@ describe('EditCtrl', function () {
       beforeEach(inject(function($controller) {
 
         ctrl = $controller('EditCtrl', {
-          Addressbook: Addressbook,
+          addressbook: addressbook,
           $routeParams: {id: 999},
           $location: $location
         });
@@ -101,10 +101,10 @@ describe('EditCtrl', function () {
   describe('when destroy', function() {
 
     beforeEach(inject(function ($controller) {
-      Addressbook = jasmine.createSpyObj('Addressbook', ['destroy']);
+      addressbook = jasmine.createSpyObj('addressbook', ['destroy']);
 
       ctrl = $controller('EditCtrl', {
-        Addressbook: Addressbook,
+        addressbook: addressbook,
         $routeParams: {},
         $location: $location
       });
@@ -113,7 +113,7 @@ describe('EditCtrl', function () {
     it('destroys entry', function() {
       ctrl.destroy(1);
 
-      expect(Addressbook.destroy).toHaveBeenCalledWith(1);
+      expect(addressbook.destroy).toHaveBeenCalledWith(1);
     });
 
     it('redirects to the list controller', function() {

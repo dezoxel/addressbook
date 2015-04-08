@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('addressbookApp')
-  .controller('ListCtrl', function (Addressbook) {
+  .controller('ListCtrl', function (addressbook) {
     var scope = this;
 
     scope.searchInput = '';
-    scope.addressbook = Addressbook.all();
+    scope.addressbook = addressbook.all();
 
     scope.destroy = function(id) {
-      Addressbook.destroy(id);
+      addressbook.destroy(id);
     };
   });
