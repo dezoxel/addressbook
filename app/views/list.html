@@ -13,10 +13,10 @@
       <td>{{ entry.address }}</td>
       <td>
         <a ng-href="#/edit/{{ entry.id }}" class="btn btn-default btn-sm">
-          <span class="glyphicon glyphicon-pencil"></span> Edit
+          <i class="glyphicon glyphicon-pencil"></i> Edit
         </a>
-        <button type="button" class="btn btn-danger btn-sm" ng-click="list.destroy(entry.id)">
-          <span class="glyphicon glyphicon-trash"></span> Delete
+        <button class="btn btn-danger btn-sm" ng-click="list.destroy(entry.id)">
+          <i class="glyphicon glyphicon-trash"></i> Delete
         </button>
       </td>
     </tr>
