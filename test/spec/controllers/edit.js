@@ -1,6 +1,5 @@
-'use strict';
-
 describe('EditCtrl', function () {
+  'use strict';
 
   var ctrl, $location, addressbook;
 

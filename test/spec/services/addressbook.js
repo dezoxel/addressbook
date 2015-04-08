@@ -1,6 +1,5 @@
-'use strict';
-
 describe('addressbook', function () {
+  'use strict';
 
   beforeEach(module('addressbookApp'));
 

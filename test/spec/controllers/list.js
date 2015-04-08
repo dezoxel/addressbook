@@ -1,6 +1,5 @@
-'use strict';
-
 describe('ListCtrl', function () {
+  'use strict';
 
   beforeEach(module('addressbookApp'));
 
