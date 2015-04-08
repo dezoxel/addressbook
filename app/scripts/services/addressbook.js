@@ -170,7 +170,7 @@ angular.module('addressbookApp')
     }
 
     function _isEmpty(list) {
-      return !list || angular.equals([], list);
+      return !list || list.length === 0;
     }
 
     // Add move validations here
