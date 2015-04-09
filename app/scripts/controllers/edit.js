@@ -3,14 +3,14 @@
 
   angular.module('addressbookApp')
     .controller('EditCtrl', function (addressbook, $routeParams, $location) {
-      var scope = this;
+      var vm = this;
 
-      scope.entry = {};
+      vm.entry = {};
 
       // edit entry action
       if ($routeParams.id) {
         try {
-          scope.entry = addressbook.find($routeParams.id);
+          vm.entry = addressbook.find($routeParams.id);
         } catch (e) {
           // TODO: Implement flash messaging for user instead of logging
           console.error('Unable to find entry with id "' + $routeParams.id + '"');
@@ -19,17 +19,17 @@
         }
       }
 
-      scope.edit = function(entry) {
+      vm.edit = function(entry) {
         addressbook.update(entry);
         $location.path('/');
       };
 
-      scope.add = function(entry) {
+      vm.add = function(entry) {
         addressbook.add(entry);
         $location.path('/');
       };
 
-      scope.destroy = function(id) {
+      vm.destroy = function(id) {
         addressbook.destroy(id);
         $location.path('/');
       };

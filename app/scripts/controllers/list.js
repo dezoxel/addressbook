@@ -3,12 +3,12 @@
 
   angular.module('addressbookApp')
     .controller('ListCtrl', function (addressbook) {
-      var scope = this;
+      var vm = this;
 
-      scope.searchInput = '';
-      scope.addressbook = addressbook.all();
+      vm.searchInput = '';
+      vm.addressbook = addressbook.all();
 
-      scope.destroy = function(id) {
+      vm.destroy = function(id) {
         addressbook.destroy(id);
       };
     });
