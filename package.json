@@ -27,14 +27,20 @@
     "jshint-stylish": "^1.0.0",
     "load-grunt-tasks": "^3.1.0",
     "time-grunt": "^1.0.0",
-    "karma-jasmine": "~0.3.5",
     "grunt-karma": "~0.10.1",
     "karma-phantomjs-launcher": "~0.1.4",
     "grunt-build-control": "~0.3.0",
     "grunt-plato": "~1.2.1",
     "karma-coverage": "~0.2.7",
     "grunt-karma-coveralls": "~2.5.3",
-    "grunt-codeclimate": "0.0.1-1"
+    "grunt-codeclimate": "0.0.1-1",
+    "mocha": "~2.2.4",
+    "karma-mocha": "~0.1.10",
+    "chai": "~2.2.0",
+    "karma-chai": "~0.1.0",
+    "sinon": "~1.14.1",
+    "karma-sinon": "~1.0.4",
+    "karma-sinon-chai": "~0.3.0"
   },
   "engines": {
     "node": ">=0.10.0"

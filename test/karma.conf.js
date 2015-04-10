@@ -14,7 +14,7 @@ module.exports = function(config) {
     basePath: '../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine'],
+    frameworks: ['mocha', 'chai', 'sinon', 'sinon-chai'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -67,7 +67,10 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-jasmine',
+      'karma-mocha',
+      'karma-chai',
+      'karma-sinon',
+      'karma-sinon-chai',
       'karma-coverage'
     ],
 

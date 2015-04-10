@@ -13,18 +13,18 @@ describe('ListCtrl', function () {
   }));
 
   it('sets search input to empty', function() {
-    expect(ctrl.searchInput).toBe('');
+    expect(ctrl.searchInput).to.equal('');
   });
 
   it('fetches the list of all addressbook entries', function() {
-    expect(ctrl.addressbook.length).toBe(9);
+    expect(ctrl.addressbook.length).to.equal(9);
   });
 
   it('has ability to destroy entry', function() {
-    spyOn(addressbook, 'destroy');
+    sinon.spy(addressbook, 'destroy');
 
     ctrl.destroy(5);
 
-    expect(addressbook.destroy).toHaveBeenCalledWith(5);
+    expect(addressbook.destroy).to.have.been.calledWith(5);
   });
 });

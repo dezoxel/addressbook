@@ -80,7 +80,9 @@ Currently project supports deployment to the [Github Pages][github-pages-url]. R
 - [Grunt](http://gruntjs.com/) - task runner
 - [JSHint](http://jshint.com/) - built-in code errors detector
 - [Karma][karma-url] - frontend test runner
-- [Jasmine](http://jasmine.github.io/) - test library
+- [Mocha](http://mochajs.org/) - test framework
+- [Chai](http://chaijs.com/) - test assertion library
+- [Sinon](http://sinonjs.org/) - test spy, stub and mock library
 - [PhantomJS](http://phantomjs.org/) - browser for testing
 - [Github Pages][github-pages-url] - hosting platform for the live example
 - [Plato][plato-url] - tool of code visualization, static analysis and complexity
