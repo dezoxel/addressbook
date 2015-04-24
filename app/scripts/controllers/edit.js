@@ -5,22 +5,24 @@
     .controller('EditCtrl', function (addressbook, $routeParams, $location) {
       var vm = this;
 
-      vm.entry = {};
+      vm.init = function() {
+        vm.entry = {};
 
-      // edit entry action
-      if ($routeParams.id) {
+        // edit entry action
+        if ($routeParams.id) {
 
-        addressbook.find($routeParams.id)
-          .then(function(entry) {
-            vm.entry = entry;
-          })
-          .catch(function() {
-            // TODO: Implement flash messaging for user instead of logging
-            console.error('Unable to find entry with id "' + $routeParams.id + '"');
+          addressbook.find($routeParams.id)
+            .then(function(entry) {
+              vm.entry = entry;
+            })
+            .catch(function() {
+              // TODO: Implement flash messaging for user instead of logging
+              console.error('Unable to find entry with id "' + $routeParams.id + '"');
 
-            $location.path('/');
-          });
-      }
+              $location.path('/');
+            });
+        }
+      };
 
       vm.edit = function(entry) {
         addressbook.update(entry);
@@ -36,5 +38,7 @@
         addressbook.destroy(id);
         $location.path('/');
       };
+
+      vm.init();
   });
 })(angular);
