@@ -5,16 +5,24 @@
     .controller('ListCtrl', function (addressbook) {
       var vm = this;
 
-      vm.searchInput = '';
-      vm.addressbook = [];
+      vm.init = function() {
+        vm.searchInput = '';
+        vm.addressbook = [];
 
-      addressbook.all()
-        .then(function(entries) {
-          vm.addressbook = entries;
-        });
+        vm.fetchList();
+      };
+
+      vm.fetchList = function() {
+        addressbook.all()
+          .then(function(entries) {
+            vm.addressbook = entries;
+          });
+      };
 
       vm.destroy = function(id) {
         addressbook.destroy(id);
       };
+
+      vm.init();
     });
 })(angular);
