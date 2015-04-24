@@ -57,20 +57,24 @@
 
 
       addressbook.update = function(entry) {
-        if (!_isValid(entry)) {
-          throw new Error('addressbook.update: Entry is not valid: ', entry);
-        }
+        return $q(function(resolve, reject) {
 
-        var i = _findIndexById(entry.id);
+          if (!_isValid(entry)) {
+            reject(new Error('addressbook.update: Entry is not valid: ', entry));
+          } else {
+            var i = _findIndexById(entry.id);
 
-        if (i === -1) {
-          throw new Error('Unable to update entry by id: "' + entry.id + '": Not found', entry);
-        }
+            if (i === -1) {
+              reject(new Error('Unable to update entry by id: "' + entry.id + '": Not found', entry));
+            } else {
+              _list[i] = entry;
+              _syncWithStorage();
 
-        _list[i] = entry;
-        _syncWithStorage();
+              resolve(entry);
+            }
+          }
 
-        return entry;
+        });
       };
 
       addressbook.reset = function() {

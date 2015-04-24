@@ -25,8 +25,16 @@
       };
 
       vm.edit = function(entry) {
-        addressbook.update(entry);
-        $location.path('/');
+        addressbook.update(entry)
+          .then(function() {
+            $location.path('/');
+          })
+          .catch(function() {
+            // TODO: Implement flash messaging for user instead of logging
+            console.error('Unable to update entry');
+
+            $location.path('/');
+          });
       };
 
       vm.add = function(entry) {
