@@ -9,14 +9,17 @@
 
       // edit entry action
       if ($routeParams.id) {
-        try {
-          vm.entry = addressbook.find($routeParams.id);
-        } catch (e) {
-          // TODO: Implement flash messaging for user instead of logging
-          console.error('Unable to find entry with id "' + $routeParams.id + '"');
 
-          $location.path('/');
-        }
+        addressbook.find($routeParams.id)
+          .then(function(entry) {
+            vm.entry = entry;
+          })
+          .catch(function() {
+            // TODO: Implement flash messaging for user instead of logging
+            console.error('Unable to find entry with id "' + $routeParams.id + '"');
+
+            $location.path('/');
+          });
       }
 
       vm.edit = function(entry) {

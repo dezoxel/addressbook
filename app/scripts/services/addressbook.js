@@ -16,13 +16,17 @@
       };
 
       addressbook.find = function(id) {
-        var i = _findIndexById(id);
+        return $q(function(resolve, reject) {
 
-        if (i === -1) {
-          throw new Error('addressbook.find(' + id +'): Not found');
-        }
+          var i = _findIndexById(id);
 
-        return _list[i];
+          if (i === -1) {
+            reject(new Error('addressbook.find(' + id +'): Not found'));
+          } else {
+            resolve(_list[i]);
+          }
+
+        });
       };
 
       addressbook.destroy = function(id) {
