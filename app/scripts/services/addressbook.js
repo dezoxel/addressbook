@@ -2,14 +2,17 @@
   'use strict';
 
   angular.module('addressbookApp')
-    .service('addressbook', function(localStorageService) {
+    .service('addressbook', function(localStorageService, $q) {
       var addressbook = this;
 
       //------------------------------------------------------------------------//
       // PUBLIC
       //------------------------------------------------------------------------//
       addressbook.all = function() {
-        return _list;
+        return $q(function(resolve) {
+
+          resolve(_list);
+        });
       };
 
       addressbook.find = function(id) {
