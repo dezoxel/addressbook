@@ -3,9 +3,10 @@ describe('addressbook', function () {
 
   beforeEach(module('addressbookApp'));
 
-  var addressbook;
-  beforeEach(inject(function(_addressbook_) {
+  var addressbook, $rootScope;
+  beforeEach(inject(function (_addressbook_, _$rootScope_) {
     addressbook = _addressbook_;
+    $rootScope = _$rootScope_;
     addressbook.reset();
   }));
 
@@ -19,11 +20,13 @@ describe('addressbook', function () {
     }
 
     it('returns empty array if no entries found', function() {
-      var entries = addressbook.all();
+      addressbook.all().then(function(entries) {
+        destroyAll(entries);
+      });
 
-      destroyAll(entries);
+      expect(addressbook.all()).to.eventually.be.empty;
 
-      expect(addressbook.all()).to.deep.equal([]);
+      $rootScope.$digest();
     });
 
     describe('when storage is empty', function() {
@@ -36,17 +39,20 @@ describe('addressbook', function () {
       it('uses predefined list and stores it', function() {
         addressbook.reset();
 
-        expect(addressbook.all()).to.contain({
+        expect(addressbook.all()).to.eventually.contain({
           'id': 1,
           'name': 'Laura Morin',
           'address': 'P.O. Box 825, 7962 Ante, Ave'
         });
+
+        $rootScope.$digest();
       });
 
       it('has predefined list with 9 entries by default', function() {
-        expect(addressbook.all().length).to.equal(9);
-      });
+        expect(addressbook.all()).to.eventually.have.length(9);
 
+        $rootScope.$digest();
+      });
     });
 
     describe('when storage is not empty', function() {
@@ -63,7 +69,9 @@ describe('addressbook', function () {
         // force clean cache and sync with storage
         addressbook.reset();
 
-        expect(addressbook.all()).to.deep.equal(fakeLocalStorageList);
+        expect(addressbook.all()).to.eventually.be.deep.equal(fakeLocalStorageList);
+
+        $rootScope.$digest();
       });
     });
 
@@ -71,37 +79,54 @@ describe('addressbook', function () {
 
   describe('#find', function() {
 
-    it('throws an exception if entry is not found', function() {
-      expect(function() { addressbook.find(999); }).to.throw;
+    it('rejects the promise if the entry is not found', function() {
+      expect(addressbook.find(999)).to.be.rejectedWith(/Not found/);
+
+      $rootScope.$digest();
     });
 
     it('returns simple js object containing addressbook entry fields', function() {
-      expect(addressbook.find(1).id).to.exist;
-      expect(addressbook.find(1).name).to.exist;
-      expect(addressbook.find(1).address).to.exist;
+      expect(addressbook.find(1)).to.eventually.have.property('id');
+      expect(addressbook.find(1)).to.eventually.have.property('name');
+      expect(addressbook.find(1)).to.eventually.have.property('address');
+
+      $rootScope.$digest();
     });
 
     it('accepts numbers inside string as an ID', function() {
-      expect(addressbook.find('2').name).to.exist;
+      expect(addressbook.find('2')).to.eventually.have.property('name');
+
+      $rootScope.$digest();
     });
   });
 
   describe('#destroy', function() {
 
-    it('returns "true" if entry was destroyed', function() {
-      expect(addressbook.destroy(1)).to.be.true;
+    it('fulfills promise if entry was destroyed', function() {
+      expect(addressbook.destroy(1)).to.be.fulfilled;
+
+      $rootScope.$digest();
     });
 
-    it('returns "false" if entry was not destroyed', function() {
-      expect(addressbook.destroy(999)).to.be.false;
+    it('rejects promise if entry was not destroyed', function() {
+      expect(addressbook.destroy(999)).to.be.rejectedWith(/Unable to destroy/);
+
+      $rootScope.$digest();
     });
 
-    it('removes the entry from the cached list', function() {
-      var length = addressbook.all().length;
+    it('removes the entry from the cached list', function(done) {
+      var length = 0;
 
-      addressbook.destroy(2);
+      addressbook.all().then(function(entries) {
+        length = entries.length;
 
-      expect(addressbook.all().length).to.equal(length - 1);
+        addressbook.destroy(2);
+
+        expect(addressbook.all()).to.eventually.have.length(length - 1);
+        done();
+      });
+
+      $rootScope.$digest();
     });
 
     it('syncs a cached list with a storage', inject(function(localStorageService) {
@@ -110,6 +135,8 @@ describe('addressbook', function () {
       addressbook.destroy(3);
 
       expect(localStorageService.set).to.have.been.called;
+
+      $rootScope.$digest();
     }));
   });
 
@@ -123,23 +150,35 @@ describe('addressbook', function () {
       validEntry = {name: 'Elmo Frazier', address: '4989 Proin Rd.'};
     });
 
-    it('throws an exception if entry is not valid', function() {
-      expect(function() { addressbook.add(notValidEntry); }).to.throw;
+    it('rejects the promise if the entry is not valid', function() {
+      expect(addressbook.add(notValidEntry)).to.be.rejectedWith(/not valid/);
+
+      $rootScope.$digest();
     });
 
     // TODO: Avoid three expectations
     it('returns the added entry', function() {
-      var addedEntry = addressbook.add(validEntry);
+      expect(addressbook.add(validEntry)).to.eventually.have.property('name', validEntry.name);
+      expect(addressbook.add(validEntry)).to.eventually.have.property('address', validEntry.address);
+      expect(addressbook.add(validEntry)).to.eventually.have.property('id');
 
-      expect(addedEntry.name).to.equal(validEntry.name);
-      expect(addedEntry.address).to.equal(validEntry.address);
-      expect(addedEntry.id).to.exist;
+      $rootScope.$digest();
     });
 
-    it('adds the entry to the cached list', function() {
-      addressbook.add(validEntry);
-      var lastEntry = addressbook.all()[addressbook.all().length - 1];
-      expect(lastEntry).to.equal(validEntry);
+    it('adds the entry to the cached list', function(done) {
+      addressbook.add(validEntry)
+        .then(function() {
+          return addressbook.all();
+        })
+        .then(function(entries) {
+          return entries[entries.length - 1];
+        })
+        .then(function(lastEntry) {
+          expect(lastEntry).to.deep.equal(validEntry);
+          done();
+        });
+
+      $rootScope.$digest();
     });
 
     it('syncs a cached list with a storage', inject(function(localStorageService) {
@@ -148,6 +187,8 @@ describe('addressbook', function () {
       addressbook.add(validEntry);
 
       expect(localStorageService.set).to.have.been.called;
+
+      $rootScope.$digest();
     }));
   });
 
@@ -161,29 +202,40 @@ describe('addressbook', function () {
       validEntry = {id: 5, name: 'Elmo Frazier', address: '4989 Proin Rd.'};
     });
 
-    it('throws an exception if entry is not found', function() {
+    it('rejects the promise if the entry is not found', function() {
       var noSuchEntry = {id: 123, name: 'Elmo Frazier', address: '4989 Proin Rd.'};
-      expect(function() { addressbook.update(noSuchEntry); }).to.throw;
+
+      expect(addressbook.update(noSuchEntry)).to.eventually.be.rejectedWith(/Not found/)
+
+      $rootScope.$digest();
     });
 
-    it('throws an exception if entry is not valid', function() {
-      expect(function() { addressbook.update(notValidEntry); }).to.throw;
+    it('rejects the promise if the entry is not valid', function() {
+      expect(addressbook.update(notValidEntry)).to.eventually.be.rejectedWith(/not valid/)
+
+      $rootScope.$digest();
     });
 
     // TODO: Avoid three expectations
     it('returns the updated entry', function() {
-      var updatedEntry = addressbook.update(validEntry);
+      expect(addressbook.update(validEntry)).to.eventually.have.property('name', validEntry.name);
+      expect(addressbook.update(validEntry)).to.eventually.have.property('address', validEntry.address);
+      expect(addressbook.update(validEntry)).to.eventually.have.property('id', validEntry.id);
 
-      expect(updatedEntry.name).to.equal(validEntry.name);
-      expect(updatedEntry.address).to.equal(validEntry.address);
-      expect(updatedEntry.id).to.equal(validEntry.id);
+      $rootScope.$digest();
     });
 
-    it('updates the entry inside the cached list', function() {
-      addressbook.update(validEntry);
+    it('updates the entry inside the cached list', function(done) {
+      addressbook.update(validEntry)
+        .then(function() {
+          return addressbook.find(validEntry.id);
+        })
+        .then(function(updatedEntry) {
+          expect(updatedEntry).to.equal(validEntry);
+          done();
+        });
 
-      var updatedEntry = addressbook.find(validEntry.id);
-      expect(updatedEntry).to.equal(validEntry);
+      $rootScope.$digest();
     });
 
     it('syncs a cached list with a storage', inject(function(localStorageService) {
@@ -195,5 +247,4 @@ describe('addressbook', function () {
     }));
 
   });
-
 });
