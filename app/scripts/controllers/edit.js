@@ -25,6 +25,7 @@
       };
 
       vm.edit = function(entry) {
+
         addressbook.update(entry)
           .then(function() {
             $location.path('/');
@@ -38,8 +39,17 @@
       };
 
       vm.add = function(entry) {
-        addressbook.add(entry);
-        $location.path('/');
+
+        addressbook.add(entry)
+          .then(function() {
+            $location.path('/');
+          })
+          .catch(function() {
+            // TODO: Implement flash messaging for user instead of logging
+            console.error('Unable to add entry');
+
+            $location.path('/');
+          });
       };
 
       vm.destroy = function(id) {

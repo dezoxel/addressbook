@@ -44,17 +44,20 @@
       };
 
       addressbook.add = function(entry) {
-        if (!_isValid(entry)) {
-          throw new Error('addressbook.add: Entry is not valid: ', entry);
-        }
+        return $q(function(resolve, reject) {
 
-        entry.id = _generateId();
-        _list.push(entry);
-        _syncWithStorage();
+          if (!_isValid(entry)) {
+            reject(new Error('addressbook.add: Entry is not valid: ', entry));
+          } else {
+            entry.id = _generateId();
+            _list.push(entry);
+            _syncWithStorage();
 
-        return entry;
+            resolve(entry);
+          }
+
+        });
       };
-
 
       addressbook.update = function(entry) {
         return $q(function(resolve, reject) {
