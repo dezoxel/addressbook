@@ -83,6 +83,7 @@
         });
       };
 
+      // TODO: Remove?
       addressbook.reset = function() {
         _list = _predefinedList();
         _syncWithStorage();

@@ -13,14 +13,14 @@
       };
 
       vm.fetchList = function() {
-        addressbook.all()
+        return addressbook.all()
           .then(function(entries) {
             vm.addressbook = entries;
           });
       };
 
       vm.destroy = function(id) {
-        addressbook.destroy(id);
+        return addressbook.destroy(id);
       };
 
       vm.init();
