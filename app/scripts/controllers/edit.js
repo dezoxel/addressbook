@@ -10,23 +10,26 @@
 
         // edit entry action
         if ($routeParams.id) {
-
-          addressbook.find($routeParams.id)
-            .then(function(entry) {
-              vm.entry = entry;
-            })
-            .catch(function() {
-              // TODO: Implement flash messaging for user instead of logging
-              console.error('Unable to find entry with id "' + $routeParams.id + '"');
-
-              $location.path('/');
-            });
+          vm.fetchEntryBy($routeParams.id);
         }
+      };
+
+      vm.fetchEntryBy = function(id) {
+        return addressbook.find($routeParams.id)
+          .then(function(entry) {
+            vm.entry = entry;
+          })
+          .catch(function() {
+            // TODO: Implement flash messaging for user instead of logging
+            console.error('Unable to find entry with id "' + $routeParams.id + '"');
+
+            $location.path('/');
+          });
       };
 
       vm.edit = function(entry) {
 
-        addressbook.update(entry)
+        return addressbook.update(entry)
           .then(function() {
             $location.path('/');
           })
@@ -40,7 +43,7 @@
 
       vm.add = function(entry) {
 
-        addressbook.add(entry)
+        return addressbook.add(entry)
           .then(function() {
             $location.path('/');
           })
@@ -54,7 +57,7 @@
 
       vm.destroy = function(id) {
 
-        addressbook.destroy(id)
+        return addressbook.destroy(id)
           .then(function() {
             $location.path('/');
           })

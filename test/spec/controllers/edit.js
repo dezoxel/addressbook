@@ -1,29 +1,60 @@
 describe('EditCtrl', function () {
   'use strict';
 
-  var ctrl, $location, addressbook;
+  function fulfilledPromise(entry) {
+    return sinon.stub().returns($q(function(resolve) {
+      resolve(entry);
+    }))
+  }
+
+  function rejectedPromise(entry) {
+    return sinon.stub().returns($q(function(resolve, reject) {
+      reject(entry);
+    }))
+  }
+
+  function addController() {
+    return $controller('EditCtrl', {
+      addressbook: addressbook,
+      $routeParams: {},
+      $location: $location
+    });
+  }
+
+  function editController() {
+    return $controller('EditCtrl', {
+      addressbook: addressbook,
+      $routeParams: {id: 1},
+      $location: $location
+    });
+  }
+
+  function resolvePromises() {
+    $rootScope.$digest();
+  }
+
+  var ctrl, $location, addressbook, $rootScope, $q, $controller;
 
   beforeEach(module('addressbookApp'));
 
-  beforeEach(function() {
+  beforeEach(inject(function(_$q_, _$rootScope_, _$controller_) {
     $location = {path: sinon.spy()};
-  });
+    $q = _$q_;
+    $rootScope = _$rootScope_;
+    $controller = _$controller_;
+  }));
 
   describe('when add', function() {
 
     var entry = {};
 
-    beforeEach(inject(function ($controller) {
-      addressbook = {add: sinon.spy()};
+    beforeEach(function() {
+      addressbook = {add: fulfilledPromise()};
 
-      ctrl = $controller('EditCtrl', {
-        addressbook: addressbook,
-        $routeParams: {},
-        $location: $location
-      });
+      ctrl = addController();
 
       entry = {name: 'Elmo Leonard', address: '123-7745 Vehicula Road'};
-    }));
+    });
 
     it('inits the controller with empty hash entry', function() {
       expect(ctrl.entry).to.deep.equal({});
@@ -35,10 +66,14 @@ describe('EditCtrl', function () {
       expect(addressbook.add).to.have.been.calledWith(entry);
     });
 
-    it('redirects to the list controller', function() {
-      ctrl.add(entry);
+    it('redirects to the list controller', function(done) {
+      ctrl.add(entry)
+        .then(function() {
+          expect($location.path).to.have.been.calledWith('/');
+        })
+        .then(done);
 
-      expect($location.path).to.have.been.calledWith('/');
+      resolvePromises();
     });
   });
 
@@ -46,26 +81,30 @@ describe('EditCtrl', function () {
 
     var entry = {};
 
-    beforeEach(inject(function ($controller, _addressbook_) {
-      addressbook = _addressbook_;
+    beforeEach(function () {
 
-      sinon.spy(addressbook, 'update');
+      entry = {id: 1, name: 'Elmo Leonard', address: '123-7745 Vehicula Road'};
 
-      ctrl = $controller('EditCtrl', {
-        addressbook: addressbook,
-        $routeParams: {id: 1},
-        $location: $location
-      });
+      addressbook = {
+        find: fulfilledPromise(entry),
+        update: fulfilledPromise(entry)
+      };
 
-      entry = {id: 5, name: 'Elmo Leonard', address: '123-7745 Vehicula Road'};
-    }));
+      ctrl = editController();
+    });
 
     it('fetches entry from the storage by id from the route params', function() {
-      expect(ctrl.entry).to.deep.equal({
-        'id': 1,
-        'name': 'Laura Morin',
-        'address': 'P.O. Box 825, 7962 Ante, Ave'
-      });
+      expect(addressbook.find).to.have.been.called;
+    });
+
+    it('stores the entry in controller\'s member', function(done) {
+      ctrl.fetchEntryBy(1)
+        .then(function() {
+          expect(ctrl.entry).to.deep.equal(entry);
+        })
+        .then(done);
+
+        resolvePromises();
     });
 
     it('updates entry in the list', function() {
@@ -74,40 +113,43 @@ describe('EditCtrl', function () {
       expect(addressbook.update).to.have.been.calledWith(entry);
     });
 
-    it('redirects to the list controller', function() {
-      ctrl.edit(entry);
+    it('redirects to the list controller', function(done) {
+      ctrl.edit(entry)
+        .then(function() {
+          expect($location.path).to.have.been.calledWith('/');
+        })
+        .then(done);
 
-      expect($location.path).to.have.been.calledWith('/');
+        resolvePromises();
     });
 
     describe('when record is not found', function() {
 
-      beforeEach(inject(function($controller) {
+      beforeEach(function() {
+        ctrl = addController();
+      });
 
-        ctrl = $controller('EditCtrl', {
-          addressbook: addressbook,
-          $routeParams: {id: 999},
-          $location: $location
-        });
-      }));
+      it('redirects to the list', function(done) {
+        addressbook.find = rejectedPromise();
 
-      it('redirects to the list', function() {
-        expect($location.path).to.have.been.calledWith('/');
+        ctrl.fetchEntryBy(999)
+          .then(function() {
+            expect($location.path).to.have.been.calledWith('/');
+          })
+          .then(done);
+
+        resolvePromises();
       });
     });
   });
 
   describe('when destroy', function() {
 
-    beforeEach(inject(function ($controller) {
-      addressbook = {destroy: sinon.spy()};
+    beforeEach(function () {
+      addressbook = {destroy: fulfilledPromise()};
 
-      ctrl = $controller('EditCtrl', {
-        addressbook: addressbook,
-        $routeParams: {},
-        $location: $location
-      });
-    }));
+      ctrl = addController();
+    });
 
     it('destroys entry', function() {
       ctrl.destroy(1);
@@ -115,10 +157,14 @@ describe('EditCtrl', function () {
       expect(addressbook.destroy).to.have.been.calledWith(1);
     });
 
-    it('redirects to the list controller', function() {
-      ctrl.destroy(1);
+    it('redirects to the list controller', function(done) {
+      ctrl.destroy(1)
+        .then(function() {
+          expect($location.path).to.have.been.calledWith('/');
+        })
+        .then(done);
 
-      expect($location.path).to.have.been.calledWith('/');
+      resolvePromises();
     });
   });
 
