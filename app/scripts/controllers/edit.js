@@ -53,8 +53,17 @@
       };
 
       vm.destroy = function(id) {
-        addressbook.destroy(id);
-        $location.path('/');
+
+        addressbook.destroy(id)
+          .then(function() {
+            $location.path('/');
+          })
+          .catch(function() {
+            // TODO: Implement flash messaging for user instead of logging
+            console.error('Unable to delete entry');
+
+            $location.path('/');
+          });
       };
 
       vm.init();

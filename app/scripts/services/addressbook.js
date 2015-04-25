@@ -30,17 +30,20 @@
       };
 
       addressbook.destroy = function(id) {
-        var i = _findIndexById(id);
+        return $q(function(resolve, reject) {
 
-        if (i === -1) {
-          console.error('Unable to destroy entry, not found by id: ' + id);
-          return false;
-        }
+          var i = _findIndexById(id);
 
-        _destroyByIndex(i);
-        _syncWithStorage();
+          if (i === -1) {
+            reject(new Error('Unable to destroy entry, not found by id: ' + id));
+          } else {
+            _destroyByIndex(i);
+            _syncWithStorage();
 
-        return true;
+            resolve();
+          }
+
+        });
       };
 
       addressbook.add = function(entry) {
