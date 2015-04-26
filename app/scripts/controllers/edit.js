@@ -15,7 +15,7 @@
       };
 
       vm.fetchEntryBy = function(id) {
-        return addressbook.find($routeParams.id)
+        return addressbook.find(id)
           .then(function(entry) {
             vm.entry = entry;
           })
