@@ -20,7 +20,10 @@
       };
 
       vm.destroy = function(id) {
-        return addressbook.destroy(id);
+        addressbook.destroy(id)
+          .catch(function() {
+            console.error('Unable to delete entry');
+          });
       };
 
       vm.init();
