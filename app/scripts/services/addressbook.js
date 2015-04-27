@@ -52,7 +52,7 @@
         return $q(function(resolve, reject) {
 
           if (!_isValid(entry)) {
-            reject(new Error('addressbook.add: Entry is not valid: ', entry));
+            reject(new Error('addressbook.add: Entry is not valid'));
           } else {
             entry.id = _generateId();
             _list.push(entry);
@@ -68,19 +68,19 @@
         return $q(function(resolve, reject) {
 
           if (!_isValid(entry)) {
-            reject(new Error('addressbook.update: Entry is not valid: ', entry));
-          } else {
-            var i = _findIndexById(entry.id);
-
-            if (i === -1) {
-              reject(new Error('Unable to update entry by id: "' + entry.id + '": Not found', entry));
-            } else {
-              _list[i] = entry;
-              _syncWithStorage();
-
-              resolve(entry);
-            }
+            return reject(new Error('addressbook.update: Entry is not valid'));
           }
+
+          var i = _findIndexById(entry.id);
+
+          if (i === -1) {
+            return reject(new Error('Unable to update entry by id: "' + entry.id + '": Not found'));
+          }
+
+          _list[i] = entry;
+          _syncWithStorage();
+
+          resolve(entry);
 
         });
       };
@@ -144,7 +144,7 @@
         return !list || list.length === 0;
       }
 
-      // Add move validations here
+      // Add more validations here
       function _isValid(entry) {
         var isValidName = entry.name && typeof entry.name === 'string' && entry.name !== '';
         var isValidAddress = entry.address && typeof entry.address === 'string' && entry.address !== '';
