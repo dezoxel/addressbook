@@ -21,7 +21,7 @@ describe('ListCtrl', function () {
 
     addressbook = {
       all: fulfilledPromise([1,2,3]),
-      destroy: sinon.spy()
+      destroy: fulfilledPromise()
     };
 
     ctrl = $controller('ListCtrl', {addressbook: addressbook});

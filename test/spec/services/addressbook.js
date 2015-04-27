@@ -7,7 +7,6 @@ describe('addressbook', function () {
   beforeEach(inject(function (_addressbook_, _$rootScope_) {
     addressbook = _addressbook_;
     $rootScope = _$rootScope_;
-    addressbook.reset();
   }));
 
   describe('#all', function() {
@@ -36,20 +35,12 @@ describe('addressbook', function () {
         localStorageService.set([]);
       }));
 
-      it('uses predefined list and stores it', function() {
-        addressbook.reset();
-
+      it('uses predefined list', function() {
         expect(addressbook.all()).to.eventually.contain({
           'id': 1,
           'name': 'Laura Morin',
           'address': 'P.O. Box 825, 7962 Ante, Ave'
         });
-
-        $rootScope.$digest();
-      });
-
-      it('has predefined list with 9 entries by default', function() {
-        expect(addressbook.all()).to.eventually.have.length(9);
 
         $rootScope.$digest();
       });
@@ -66,9 +57,6 @@ describe('addressbook', function () {
       }));
 
       it('uses local storage as a backend', function() {
-        // force clean cache and sync with storage
-        addressbook.reset();
-
         expect(addressbook.all()).to.eventually.be.deep.equal(fakeLocalStorageList);
 
         $rootScope.$digest();

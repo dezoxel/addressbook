@@ -28,8 +28,8 @@
     .config(['localStorageServiceProvider', function(localStorageServiceProvider){
       localStorageServiceProvider.setPrefix('addressbook');
     }])
-    .config(function() {
-
+    .run(function(addressbook, predefinedList) {
+      addressbook.setPredefinedList(predefinedList);
     });
 
 })(angular);

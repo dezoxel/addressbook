@@ -11,6 +11,8 @@
       addressbook.all = function() {
         return $q(function(resolve) {
 
+          _fetchList();
+
           resolve(_list);
         });
       };
@@ -83,11 +85,8 @@
         });
       };
 
-      // TODO: Remove?
-      addressbook.reset = function() {
-        _list = _predefinedList();
-        _syncWithStorage();
-        _list = localStorageService.get('list');
+      addressbook.setPredefinedList = function(list) {
+        _predefinedList = list;
       };
 
       //------------------------------------------------------------------------//
@@ -95,59 +94,10 @@
       //------------------------------------------------------------------------//
       // cached list of addressbook entries
       var _list = [];
+      var _predefinedList = [];
 
       function _init() {
         _fetchList();
-      }
-
-      function _predefinedList() {
-        return [
-          {
-            'id': 1,
-            'name': 'Laura Morin',
-            'address': 'P.O. Box 825, 7962 Ante, Ave'
-          },
-          {
-            'id': 2,
-            'name': 'Teegan Medina',
-            'address': '757-3869 Non St.'
-          },
-          {
-            'id': 3,
-            'name': 'Nina Guy',
-            'address': 'P.O. Box 241, 3444 Purus, Road'
-          },
-          {
-            'id': 4,
-            'name': 'Elmo Frazier',
-            'address': '4989 Proin Rd.'
-          },
-          {
-            'id': 5,
-            'name': 'Nyssa Leonard',
-            'address': '387-6263 Pede. Av.'
-          },
-          {
-            'id': 6,
-            'name': 'Dexter Christian',
-            'address': '967-8847 Vehicula Road'
-          },
-          {
-            'id': 7,
-            'name': 'Joan Reynolds',
-            'address': '285-1928 In St.'
-          },
-          {
-            'id': 8,
-            'name': 'Audrey Gross',
-            'address': '7130 Suspendisse Street'
-          },
-          {
-            'id': 9,
-            'name': 'Keely Mendez',
-            'address': 'P.O. Box 958, 9844 Nulla Rd.'
-          }
-        ];
       }
 
       function _fetchList() {
@@ -155,7 +105,9 @@
 
         if (_isEmpty(listFromStorage)) {
           // put the predefined list to the storage
-          addressbook.reset();
+          _list = _predefinedList;
+          _syncWithStorage();
+          _list = localStorageService.get('list');
         }
 
         _list = localStorageService.get('list');
