@@ -32,15 +32,14 @@ If browser was not opened, please open the [http://localhost:9000](http://localh
 - Delete
 
 ## TODO
-1. Implement flash messaging
-2. Make protection of adding entries after 200 addresses
-3. Add support for promises in **addressbook** service
+1. Create adapter for mongolab storage
+2. Implement flash messaging
+3. Make protection of adding entries after 200 addresses
 4. E2E tests
 5. Fix margins & paddings where needed
 6. Google analytics
-7. Create adapter for mongolab storage
-8. Create adapter for firebase storage
-9. Optimize performance for 2000 entries
+7. Create adapter for firebase storage
+8. Optimize performance for 2000 entries
 
 ## Build & development
 
