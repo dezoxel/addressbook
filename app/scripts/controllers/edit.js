@@ -6,6 +6,7 @@
       var vm = this;
 
       vm.init = function() {
+
         vm.entry = {};
 
         // edit entry action
@@ -15,6 +16,7 @@
       };
 
       vm.fetchEntryBy = function(id) {
+
         return addressbook.find(id)
           .then(function(entry) {
             vm.entry = entry;
@@ -30,13 +32,11 @@
       vm.edit = function(entry) {
 
         return addressbook.update(entry)
-          .then(function() {
-            $location.path('/');
-          })
           .catch(function() {
             // TODO: Implement flash messaging for user instead of logging
             console.error('Unable to update entry');
-
+          })
+          .finally(function() {
             $location.path('/');
           });
       };
@@ -44,13 +44,11 @@
       vm.add = function(entry) {
 
         return addressbook.add(entry)
-          .then(function() {
-            $location.path('/');
-          })
           .catch(function() {
             // TODO: Implement flash messaging for user instead of logging
             console.error('Unable to add entry');
-
+          })
+          .finally(function() {
             $location.path('/');
           });
       };
@@ -58,13 +56,11 @@
       vm.destroy = function(id) {
 
         return addressbook.destroy(id)
-          .then(function() {
-            $location.path('/');
-          })
           .catch(function() {
             // TODO: Implement flash messaging for user instead of logging
             console.error('Unable to delete entry');
-
+          })
+          .finally(function() {
             $location.path('/');
           });
       };
