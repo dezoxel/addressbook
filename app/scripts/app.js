@@ -25,9 +25,12 @@
           redirectTo: '/'
         });
     })
-    .config(['localStorageServiceProvider', function(localStorageServiceProvider){
+    .config(function(localStorageServiceProvider) {
       localStorageServiceProvider.setPrefix('addressbook');
-    }])
+    })
+    .config(function(addressbookProvider) {
+      addressbookProvider.setAdapterName('localstorageAdapter');
+    })
     .run(function(addressbook, predefinedList) {
       addressbook.setPredefinedList(predefinedList);
     });

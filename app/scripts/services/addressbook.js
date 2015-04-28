@@ -5,8 +5,12 @@
     .provider('addressbook', function() {
       var adapterName = null;
 
-      this.setAdapter = function(value) {
+      this.setAdapterName = function(value) {
         adapterName = value;
+      };
+
+      this.getAdapterName = function() {
+        return adapterName;
       };
 
       this.$get = function($injector) {
