@@ -17,16 +17,16 @@
 
   <a href="#/" class="btn btn-default">Cancel</a>
   <button class="btn btn-primary"
-    ng-show="editCtrl.entry.id"
+    ng-hide="editCtrl.entry.isNew()"
     ng-click="editCtrl.edit(editCtrl.entry)"
     ng-disabled="editForm.$invalid">
     Save
   </button>
   <button class="btn btn-primary"
-    ng-hide="editCtrl.entry.id"
+    ng-show="editCtrl.entry.isNew()"
     ng-click="editCtrl.add(editCtrl.entry)"
     ng-disabled="editForm.$invalid">
     Add
   </button>
-  <button ng-click="editCtrl.destroy(editCtrl.entry.id)" ng-show="editCtrl.entry.id" class="btn btn-danger">Delete</button>
+  <button ng-click="editCtrl.destroy(editCtrl.entry.getId())" ng-hide="editCtrl.entry.isNew()" class="btn btn-danger">Delete</button>
 </form>

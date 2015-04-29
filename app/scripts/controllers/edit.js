@@ -7,7 +7,7 @@
 
       vm.init = function() {
 
-        vm.entry = {};
+        vm.entry = new addressbook();
 
         // edit entry action
         if ($routeParams.id) {

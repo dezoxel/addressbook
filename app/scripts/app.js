@@ -5,7 +5,8 @@
     .module('addressbookApp', [
       'ngRoute',
       'ngTouch',
-      'LocalStorageModule'
+      'LocalStorageModule',
+      'ngResource'
     ])
     .config(function ($routeProvider) {
       $routeProvider
@@ -29,7 +30,7 @@
       localStorageServiceProvider.setPrefix('addressbook');
     })
     .config(function(addressbookProvider) {
-      addressbookProvider.setAdapterName('localstorageAdapter');
+      addressbookProvider.setAdapterName('mongolabAdapter');
     })
     .run(function(addressbook, predefinedList) {
       addressbook.setPredefinedList(predefinedList);

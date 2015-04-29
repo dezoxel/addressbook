@@ -2,35 +2,54 @@
   'use strict';
 
   angular.module('addressbookApp')
-    .service('mongolabAdapter', function() {
-      var addressbook = this;
+    .factory('mongolabAdapter', function($resource) {
+      var Addressbook = $resource('https://api.mongolab.com/api/1/databases/addressbook/collections/addressbook/:id', {
+        apiKey: 'ERTrXTJMc7-ELVF_uFM008EerSToARVE'
+      }, {
+        update: {
+          method: 'PUT'
+        }
+      });
 
+      Addressbook._update = Addressbook.update;
 
       //------------------------------------------------------------------------//
       // PUBLIC
       //------------------------------------------------------------------------//
-      addressbook.all = function() {
-        throw new Error('addressbook.all: not implemented');
+      Addressbook.all = function() {
+        return Addressbook.query().$promise;
       };
 
-      addressbook.find = function(id) {
-        throw new Error('addressbook.find: not implemented');
+      Addressbook.find = function(id) {
+        return Addressbook.get({id: id}).$promise;
       };
 
-      addressbook.destroy = function(id) {
-        throw new Error('addressbook.destroy: not implemented');
+      Addressbook.destroy = function(id) {
+        return Addressbook.remove({id: id}).$promise;
       };
 
-      addressbook.add = function(entry) {
-        throw new Error('addressbook.add: not implemented');
+      Addressbook.add = function(entry) {
+        return entry.$save();
       };
 
-      addressbook.update = function(entry) {
-        throw new Error('addressbook.update: not implemented');
+      Addressbook.update = function(entry) {
+        return Addressbook._update({id: entry._id.$oid}, entry).$promise;
       };
 
-      addressbook.setPredefinedList = function(list) {
+      Addressbook.setPredefinedList = function(list) {
         _predefinedList = list;
+      };
+
+      Addressbook.prototype.getId = function() {
+        if (this._id) {
+          return this._id.$oid;
+        }
+
+        return null;
+      };
+
+      Addressbook.prototype.isNew = function() {
+        return !Boolean(this.getId());
       };
 
       //------------------------------------------------------------------------//
@@ -38,13 +57,8 @@
       //------------------------------------------------------------------------//
       var _predefinedList = [];
 
-      function _init() {
-      }
-
-      //------------------------------------------------------------------------//
-      // INIT
-      //------------------------------------------------------------------------//
-      _init();
+      return Addressbook;
     });
+
 
 })(angular);
