@@ -29,24 +29,12 @@
           });
       };
 
-      vm.edit = function(entry) {
+      vm.save = function() {
 
-        return AddressbookEntry.update(entry)
+        return vm.entry.$save()
           .catch(function() {
             // TODO: Implement flash messaging for user instead of logging
-            console.error('Unable to update entry');
-          })
-          .finally(function() {
-            $location.path('/');
-          });
-      };
-
-      vm.add = function(entry) {
-
-        return AddressbookEntry.add(entry)
-          .catch(function() {
-            // TODO: Implement flash messaging for user instead of logging
-            console.error('Unable to add entry');
+            console.error('Unable to save entry');
           })
           .finally(function() {
             $location.path('/');

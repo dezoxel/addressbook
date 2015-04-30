@@ -11,8 +11,6 @@
         }
       });
 
-      AddressbookEntry._update = AddressbookEntry.update;
-
       //------------------------------------------------------------------------//
       // PUBLIC
       //------------------------------------------------------------------------//
@@ -26,14 +24,6 @@
 
       AddressbookEntry.destroy = function(id) {
         return AddressbookEntry.remove({id: id}).$promise;
-      };
-
-      AddressbookEntry.add = function(entry) {
-        return entry.$save();
-      };
-
-      AddressbookEntry.update = function(entry) {
-        return AddressbookEntry._update({id: entry._id.$oid}, entry).$promise;
       };
 
       AddressbookEntry.setPredefinedList = function(list) {

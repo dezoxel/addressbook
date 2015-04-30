@@ -18,13 +18,13 @@
   <a href="#/" class="btn btn-default">Cancel</a>
   <button class="btn btn-primary"
     ng-hide="editCtrl.entry.isNew()"
-    ng-click="editCtrl.edit(editCtrl.entry)"
+    ng-click="editCtrl.save()"
     ng-disabled="editForm.$invalid">
     Save
   </button>
   <button class="btn btn-primary"
     ng-show="editCtrl.entry.isNew()"
-    ng-click="editCtrl.add(editCtrl.entry)"
+    ng-click="editCtrl.save()"
     ng-disabled="editForm.$invalid">
     Add
   </button>
