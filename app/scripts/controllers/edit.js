@@ -41,9 +41,9 @@
           });
       };
 
-      vm.destroy = function(id) {
+      vm.delete = function() {
 
-        return AddressbookEntry.destroy(id)
+        return vm.entry.$delete()
           .catch(function() {
             // TODO: Implement flash messaging for user instead of logging
             console.error('Unable to delete entry');

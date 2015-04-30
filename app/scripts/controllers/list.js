@@ -19,8 +19,8 @@
           });
       };
 
-      vm.destroy = function(id) {
-        AddressbookEntry.destroy(id)
+      vm.delete = function(entry) {
+        entry.$delete()
           .catch(function() {
             console.error('Unable to delete entry');
           });

@@ -28,5 +28,5 @@
     ng-disabled="editForm.$invalid">
     Add
   </button>
-  <button ng-click="editCtrl.destroy(editCtrl.entry.getId())" ng-hide="editCtrl.entry.isNew()" class="btn btn-danger">Delete</button>
+  <button ng-click="editCtrl.delete()" ng-hide="editCtrl.entry.isNew()" class="btn btn-danger">Delete</button>
 </form>
