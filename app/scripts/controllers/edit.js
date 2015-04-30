@@ -2,12 +2,12 @@
   'use strict';
 
   angular.module('addressbookApp')
-    .controller('EditCtrl', function (addressbook, $routeParams, $location) {
+    .controller('EditCtrl', function (AddressbookEntry, $routeParams, $location) {
       var vm = this;
 
       vm.init = function() {
 
-        vm.entry = new addressbook();
+        vm.entry = new AddressbookEntry();
 
         // edit entry action
         if ($routeParams.id) {
@@ -17,7 +17,7 @@
 
       vm.fetchEntryBy = function(id) {
 
-        return addressbook.find(id)
+        return AddressbookEntry.find(id)
           .then(function(entry) {
             vm.entry = entry;
           })
@@ -31,7 +31,7 @@
 
       vm.edit = function(entry) {
 
-        return addressbook.update(entry)
+        return AddressbookEntry.update(entry)
           .catch(function() {
             // TODO: Implement flash messaging for user instead of logging
             console.error('Unable to update entry');
@@ -43,7 +43,7 @@
 
       vm.add = function(entry) {
 
-        return addressbook.add(entry)
+        return AddressbookEntry.add(entry)
           .catch(function() {
             // TODO: Implement flash messaging for user instead of logging
             console.error('Unable to add entry');
@@ -55,7 +55,7 @@
 
       vm.destroy = function(id) {
 
-        return addressbook.destroy(id)
+        return AddressbookEntry.destroy(id)
           .catch(function() {
             // TODO: Implement flash messaging for user instead of logging
             console.error('Unable to delete entry');

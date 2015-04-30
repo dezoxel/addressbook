@@ -3,7 +3,7 @@
 
   angular.module('addressbookApp')
     .factory('mongolabAdapter', function($resource) {
-      var Addressbook = $resource('https://api.mongolab.com/api/1/databases/addressbook/collections/addressbook/:id', {
+      var AddressbookEntry = $resource('https://api.mongolab.com/api/1/databases/addressbook/collections/addressbook/:id', {
         apiKey: 'ERTrXTJMc7-ELVF_uFM008EerSToARVE'
       }, {
         update: {
@@ -11,36 +11,36 @@
         }
       });
 
-      Addressbook._update = Addressbook.update;
+      AddressbookEntry._update = AddressbookEntry.update;
 
       //------------------------------------------------------------------------//
       // PUBLIC
       //------------------------------------------------------------------------//
-      Addressbook.all = function() {
-        return Addressbook.query().$promise;
+      AddressbookEntry.all = function() {
+        return AddressbookEntry.query().$promise;
       };
 
-      Addressbook.find = function(id) {
-        return Addressbook.get({id: id}).$promise;
+      AddressbookEntry.find = function(id) {
+        return AddressbookEntry.get({id: id}).$promise;
       };
 
-      Addressbook.destroy = function(id) {
-        return Addressbook.remove({id: id}).$promise;
+      AddressbookEntry.destroy = function(id) {
+        return AddressbookEntry.remove({id: id}).$promise;
       };
 
-      Addressbook.add = function(entry) {
+      AddressbookEntry.add = function(entry) {
         return entry.$save();
       };
 
-      Addressbook.update = function(entry) {
-        return Addressbook._update({id: entry._id.$oid}, entry).$promise;
+      AddressbookEntry.update = function(entry) {
+        return AddressbookEntry._update({id: entry._id.$oid}, entry).$promise;
       };
 
-      Addressbook.setPredefinedList = function(list) {
+      AddressbookEntry.setPredefinedList = function(list) {
         _predefinedList = list;
       };
 
-      Addressbook.prototype.getId = function() {
+      AddressbookEntry.prototype.getId = function() {
         if (this._id) {
           return this._id.$oid;
         }
@@ -48,7 +48,7 @@
         return null;
       };
 
-      Addressbook.prototype.isNew = function() {
+      AddressbookEntry.prototype.isNew = function() {
         return !Boolean(this.getId());
       };
 
@@ -57,7 +57,7 @@
       //------------------------------------------------------------------------//
       var _predefinedList = [];
 
-      return Addressbook;
+      return AddressbookEntry;
     });
 
 

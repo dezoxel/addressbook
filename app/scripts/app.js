@@ -29,11 +29,11 @@
     .config(function(localStorageServiceProvider) {
       localStorageServiceProvider.setPrefix('addressbook');
     })
-    .config(function(addressbookProvider) {
-      addressbookProvider.setAdapterName('mongolabAdapter');
+    .config(function(AddressbookEntryProvider) {
+      AddressbookEntryProvider.setAdapterName('mongolabAdapter');
     })
-    .run(function(addressbook, predefinedList) {
-      addressbook.setPredefinedList(predefinedList);
+    .run(function(AddressbookEntry, predefinedList) {
+      AddressbookEntry.setPredefinedList(predefinedList);
     });
 
 })(angular);

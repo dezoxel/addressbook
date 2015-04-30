@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('addressbookApp')
-    .controller('ListCtrl', function (addressbook) {
+    .controller('ListCtrl', function (AddressbookEntry) {
       var vm = this;
 
       vm.init = function() {
@@ -13,14 +13,14 @@
       };
 
       vm.fetchList = function() {
-        return addressbook.all()
+        return AddressbookEntry.all()
           .then(function(entries) {
             vm.addressbook = entries;
           });
       };
 
       vm.destroy = function(id) {
-        addressbook.destroy(id)
+        AddressbookEntry.destroy(id)
           .catch(function() {
             console.error('Unable to delete entry');
           });
