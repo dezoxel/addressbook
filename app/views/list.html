@@ -8,7 +8,7 @@
         <a ng-href="#/add" class="btn btn-primary btn-sm">Add address</a>
       </th>
     </tr>
-    <tr ng-repeat="entry in list.addressbook | filter:searchInput">
+    <tr ng-repeat="entry in list.entries | filter:searchInput">
       <td>{{ entry.name }}</td>
       <td>{{ entry.address }}</td>
       <td>

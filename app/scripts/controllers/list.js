@@ -7,19 +7,21 @@
 
       vm.init = function() {
         vm.searchInput = '';
-        vm.addressbook = [];
+        vm.entries = [];
 
         vm.fetchList();
       };
 
       vm.fetchList = function() {
+
         return AddressbookEntry.all()
           .then(function(entries) {
-            vm.addressbook = entries;
+            vm.entries = entries;
           });
       };
 
       vm.delete = function(entry) {
+
         entry.$delete()
           .catch(function() {
             console.error('Unable to delete entry');
