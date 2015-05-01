@@ -1,7 +1,7 @@
 <form name="editForm">
   <div class="form-group" ng-class="{'has-error': editForm.name.$invalid && editForm.name.$dirty}">
     <label class="control-label">Name</label>
-    <input type="text" name="name" class="form-control" placeholder="Enter first and last name" ng-model="editCtrl.entry.name" required>
+    <input type="text" name="name" class="form-control" placeholder="Enter first and last name" ng-model="ctrl.entry.name" required>
     <span ng-show="editForm.name.$error.required && editForm.name.$dirty" class="help-block">
       Please enter a name
     </span>
@@ -9,7 +9,7 @@
 
   <div class="form-group" ng-class="{'has-error': editForm.address.$invalid && editForm.address.$dirty}">
     <label class="control-label">Address</label>
-    <input type="text" name="address" class="form-control" placeholder="Enter address" ng-model="editCtrl.entry.address" required>
+    <input type="text" name="address" class="form-control" placeholder="Enter address" ng-model="ctrl.entry.address" required>
     <p ng-show="editForm.address.$error.required && editForm.address.$dirty" class="help-block">
       Please enter an address
     </p>
@@ -17,16 +17,16 @@
 
   <a href="#/" class="btn btn-default">Cancel</a>
   <button class="btn btn-primary"
-    ng-hide="editCtrl.entry.isNew()"
-    ng-click="editCtrl.save()"
+    ng-hide="ctrl.entry.isNew()"
+    ng-click="ctrl.save()"
     ng-disabled="editForm.$invalid">
     Save
   </button>
   <button class="btn btn-primary"
-    ng-show="editCtrl.entry.isNew()"
-    ng-click="editCtrl.save()"
+    ng-show="ctrl.entry.isNew()"
+    ng-click="ctrl.save()"
     ng-disabled="editForm.$invalid">
     Add
   </button>
-  <button ng-click="editCtrl.delete()" ng-hide="editCtrl.entry.isNew()" class="btn btn-danger">Delete</button>
+  <button ng-click="ctrl.delete()" ng-hide="ctrl.entry.isNew()" class="btn btn-danger">Delete</button>
 </form>

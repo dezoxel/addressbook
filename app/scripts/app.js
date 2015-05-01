@@ -16,11 +16,11 @@
         })
         .when('/add', {
           templateUrl: 'views/edit.html',
-          controller: 'EditCtrl as editCtrl'
+          controller: 'EditCtrl as ctrl'
         })
         .when('/edit/:id', {
           templateUrl: 'views/edit.html',
-          controller: 'EditCtrl as editCtrl'
+          controller: 'EditCtrl as ctrl'
         })
         .otherwise({
           redirectTo: '/'
