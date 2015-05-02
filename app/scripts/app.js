@@ -30,7 +30,7 @@
       localStorageServiceProvider.setPrefix('addressbook');
     })
     .config(function(AddressbookEntryProvider) {
-      AddressbookEntryProvider.setAdapterName('mongolabAdapter');
+      AddressbookEntryProvider.setAdapterName('MongoLabAdapter');
     })
     .run(function(AddressbookEntry, predefinedList) {
       AddressbookEntry.setPredefinedList(predefinedList);

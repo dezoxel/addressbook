@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('addressbookApp')
-    .factory('mongolabAdapter', function($resource) {
+    .factory('MongoLabAdapter', function($resource) {
       var AddressbookEntry = $resource('https://api.mongolab.com/api/1/databases/addressbook/collections/addressbook/:id', {
         apiKey: 'ERTrXTJMc7-ELVF_uFM008EerSToARVE',
         id: '@_id.$oid'
@@ -35,9 +35,6 @@
         return null;
       };
 
-      // Since $resource doesn't have $create method, we use $save as a base
-      AddressbookEntry.prototype._$create = AddressbookEntry.prototype.$save;
-
       // we redefine $save method because we want to follow RESTful API of MongoLab where creating of resource uses
       // POST and updating of resource uses PUT
       AddressbookEntry.prototype.$save = function() {
@@ -52,6 +49,9 @@
       // PRIVATE
       //------------------------------------------------------------------------//
       var _predefinedList = [];
+
+      // Since $resource doesn't have $create method, we use $save as a base
+      AddressbookEntry.prototype._$create = AddressbookEntry.prototype.$save;
 
       return AddressbookEntry;
     });
