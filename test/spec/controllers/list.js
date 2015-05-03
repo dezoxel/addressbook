@@ -13,18 +13,16 @@ describe('ListCtrl', function () {
 
   beforeEach(module('addressbookApp'));
 
-  var ctrl, addressbook, $rootScope, $q;
+  var ctrl, AddressbookEntry, $rootScope, $q;
 
   beforeEach(inject(function ($controller, _$rootScope_, _$q_) {
     $rootScope = _$rootScope_;
     $q = _$q_;
 
-    addressbook = {
-      all: fulfilledPromise([1,2,3]),
-      destroy: fulfilledPromise()
-    };
+    AddressbookEntry = function() {};
+    AddressbookEntry.all = fulfilledPromise([1,2,3]);
 
-    ctrl = $controller('ListCtrl', {addressbook: addressbook});
+    ctrl = $controller('ListCtrl', {AddressbookEntry: AddressbookEntry});
   }));
 
   it('sets search input to empty', function() {
@@ -32,13 +30,13 @@ describe('ListCtrl', function () {
   });
 
   it('fetches the list of all addressbook entries', function() {
-    expect(addressbook.all).to.have.been.called;
+    expect(AddressbookEntry.all).to.have.been.called;
   });
 
   it('stores the list of entries in controller member', function(done) {
 
     ctrl.fetchList().then(function() {
-      expect(ctrl.addressbook).to.deep.equal([1,2,3]);
+      expect(ctrl.entries).to.deep.equal([1,2,3]);
     })
     .then(done);
 
@@ -46,8 +44,10 @@ describe('ListCtrl', function () {
   });
 
   it('has ability to destroy entry', function() {
-    ctrl.destroy(5);
+    var entry = {$delete: fulfilledPromise()};
 
-    expect(addressbook.destroy).to.have.been.calledWith(5);
+    ctrl.delete(entry);
+
+    expect(entry.$delete).to.have.been.called;
   });
 });
