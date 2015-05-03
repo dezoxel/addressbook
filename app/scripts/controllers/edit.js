@@ -23,7 +23,7 @@
           })
           .catch(function() {
             // TODO: Implement flash messaging for user instead of logging
-            console.error('Unable to find entry with id "' + $routeParams.id + '"');
+            console.error('Unable to find entry with id "' + id + '"');
 
             $location.path('/');
           });
