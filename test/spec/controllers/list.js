@@ -43,7 +43,7 @@ describe('ListCtrl', function () {
     resolvePromises();
   });
 
-  it('has ability to destroy entry', function() {
+  it('has ability to delete entry', function() {
     var entry = {$delete: fulfilledPromise()};
 
     ctrl.delete(entry);

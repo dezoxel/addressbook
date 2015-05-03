@@ -147,14 +147,14 @@ describe('EditCtrl', function () {
     });
   });
 
-  describe('when destroy', function() {
+  describe('when delete', function() {
 
     beforeEach(function () {
       ctrl = addController();
       ctrl.entry = {$delete: fulfilledPromise()};
     });
 
-    it('destroys entry', function() {
+    it('deletes entry', function() {
       ctrl.delete();
 
       expect(ctrl.entry.$delete).to.have.been.called;
