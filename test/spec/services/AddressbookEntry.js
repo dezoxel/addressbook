@@ -1,8 +1,8 @@
-describe('addressbook', function() {
+describe('AddressbookEntry', function() {
   var provider;
 
-  beforeEach(module('addressbookApp', function(addressbookProvider) {
-    provider = addressbookProvider;
+  beforeEach(module('addressbookApp', function(AddressbookEntryProvider) {
+    provider = AddressbookEntryProvider;
   }));
 
   it('sets adapter name', inject(function() {
