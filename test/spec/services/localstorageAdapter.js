@@ -1,238 +1,218 @@
-describe('addressbook: localstorageAdapter', function () {
+describe('LocalStorageAdapter', function () {
   'use strict';
+
+  function resolvePromises() {
+    $rootScope.$digest();
+  }
 
   beforeEach(module('addressbookApp'));
 
-  var addressbook, $rootScope;
-  beforeEach(inject(function (_localstorageAdapter_, _$rootScope_) {
-    addressbook = _localstorageAdapter_;
+  var AddressbookEntry, $rootScope, fakeLocalStorageList, entry, localStorageService;
+
+  beforeEach(inject(function (_LocalStorageAdapter_, _$rootScope_, _localStorageService_) {
+    AddressbookEntry = _LocalStorageAdapter_;
     $rootScope = _$rootScope_;
+    localStorageService = _localStorageService_;
+
+    entry = {id: 1, name: 'Petya', address: 'Hey str. 123'};
+
+    fakeLocalStorageList = [entry];
+    sinon.stub(localStorageService, 'get').returns(fakeLocalStorageList);
   }));
 
-  describe('#all', function() {
+  describe('when storage is empty', function() {
 
-    function destroyAll(entries) {
-      var i = entries.length;
-      while(i--) {
-        addressbook.destroy(entries[i].id);
-      }
-    }
+    beforeEach(inject(function(localStorageService) {
+      localStorageService.get.restore();
+      sinon.stub(localStorageService, 'get').returns([]);
+    }));
 
-    it('returns empty array if no entries found', function() {
-      addressbook.all().then(function(entries) {
-        destroyAll(entries);
-      });
+    it('has ability to specify predefined list', function() {
+      AddressbookEntry.setPredefinedList([entry]);
 
-      expect(addressbook.all()).to.eventually.be.empty;
+      expect(AddressbookEntry.all()).to.eventually.contain(new AddressbookEntry(entry));
 
-      $rootScope.$digest();
-    });
-
-    describe('when storage is empty', function() {
-
-      beforeEach(inject(function(localStorageService) {
-
-        localStorageService.set([]);
-      }));
-
-      it('uses predefined list', function() {
-        expect(addressbook.all()).to.eventually.contain({
-          'id': 1,
-          'name': 'Laura Morin',
-          'address': 'P.O. Box 825, 7962 Ante, Ave'
-        });
-
-        $rootScope.$digest();
-      });
-    });
-
-    describe('when storage is not empty', function() {
-
-      var fakeLocalStorageList = [];
-
-      beforeEach(inject(function(localStorageService) {
-        fakeLocalStorageList = [{id: 1, name: 'Test', address: 'Hello'}];
-
-        sinon.stub(localStorageService, 'get').returns(fakeLocalStorageList);
-      }));
-
-      it('uses local storage as a backend', function() {
-        expect(addressbook.all()).to.eventually.be.deep.equal(fakeLocalStorageList);
-
-        $rootScope.$digest();
-      });
+      resolvePromises();
     });
 
   });
 
-  describe('#find', function() {
+  describe('when storage is not empty', function() {
+
+    it('uses local storage as a backend', function() {
+      expect(AddressbookEntry.all()).to.eventually.be.deep.equal([new AddressbookEntry(entry)]);
+
+      resolvePromises();
+    });
+  });
+
+  describe('.find', function() {
 
     it('rejects the promise if the entry is not found', function() {
-      expect(addressbook.find(999)).to.be.rejectedWith(/Not found/);
+      expect(AddressbookEntry.find(999)).to.be.rejectedWith(/Not found/);
 
-      $rootScope.$digest();
+      resolvePromises();
     });
 
-    it('returns simple js object containing addressbook entry fields', function() {
-      expect(addressbook.find(1)).to.eventually.have.property('id');
-      expect(addressbook.find(1)).to.eventually.have.property('name');
-      expect(addressbook.find(1)).to.eventually.have.property('address');
+    it('returns AddressbookEntry instance if found', function() {
+      expect(AddressbookEntry.find(1)).to.be.fulfilled.and.eventually.be.an.instanceof(AddressbookEntry);
 
-      $rootScope.$digest();
+      resolvePromises();
     });
 
     it('accepts numbers inside string as an ID', function() {
-      expect(addressbook.find('2')).to.eventually.have.property('name');
+      expect(AddressbookEntry.find('1')).to.be.fulfilled.and.eventually.be.an.instanceof(AddressbookEntry);
 
-      $rootScope.$digest();
+      resolvePromises();
+    });
+
+    it('doesnt use cached list', function(done) {
+      AddressbookEntry.find(1)
+        .then(function() {
+          expect(localStorageService.get).to.have.been.calledWith('list');
+        })
+        .then(done);
+
+      resolvePromises();
     });
   });
 
-  describe('#destroy', function() {
+  describe('#delete', function() {
 
-    it('fulfills promise if entry was destroyed', function() {
-      expect(addressbook.destroy(1)).to.be.fulfilled;
+    it('fulfills promise if entry was deleted', function(done) {
+      AddressbookEntry.find(1)
+        .then(function(entry) {
+          expect(entry.$delete()).to.be.fulfilled;
+        })
+        .then(done);
 
-      $rootScope.$digest();
+      resolvePromises();
     });
 
-    it('rejects promise if entry was not destroyed', function() {
-      expect(addressbook.destroy(999)).to.be.rejectedWith(/Unable to destroy/);
+    it('rejects promise if entry was not deleted', function() {
+      var entry = new AddressbookEntry({id: 999, name: 'Test name', address: 'Test address'});
+      expect(entry.$delete()).to.be.rejectedWith(/Unable to delete/);
 
-      $rootScope.$digest();
+      resolvePromises();
     });
 
-    it('removes the entry from the cached list', function(done) {
-      var length = 0;
+    it('removes the entry', function(done) {
+      var initialLength = 0;
 
-      addressbook.all().then(function(entries) {
-        length = entries.length;
+      AddressbookEntry.find(1)
+        .then(function(entry) {
+          return entry.$delete();
+        })
+        .then(function(entries) {
+          expect(localStorageService.get).to.have.been.called;
+        })
+        .then(done);
 
-        addressbook.destroy(2);
-
-        expect(addressbook.all()).to.eventually.have.length(length - 1);
-        done();
-      });
-
-      $rootScope.$digest();
+      resolvePromises();
     });
 
-    it('syncs a cached list with a storage', inject(function(localStorageService) {
+    it('syncs a cached list with a storage', function(done) {
       sinon.spy(localStorageService, 'set');
 
-      addressbook.destroy(3);
+      AddressbookEntry.find(1)
+        .then(function(entry) {
+          return entry.$delete();
+        })
+        .then(function() {
+          expect(localStorageService.set).to.have.been.called;
+        })
+        .then(done);
 
-      expect(localStorageService.set).to.have.been.called;
-
-      $rootScope.$digest();
-    }));
+      resolvePromises();
+    });
   });
 
-  describe('#add', function() {
+  describe('when add', function() {
 
-    var notValidEntry = {};
-    var validEntry = {};
+    var entry = null;
 
     beforeEach(function() {
-      notValidEntry = {some: 'weird', properties: 'here'};
-      validEntry = {name: 'Elmo Frazier', address: '4989 Proin Rd.'};
+      entry = new AddressbookEntry({name: 'Elmo Frazier', address: '4989 Proin Rd.'});
     });
 
     it('rejects the promise if the entry is not valid', function() {
-      expect(addressbook.add(notValidEntry)).to.be.rejectedWith(/not valid/);
+      entry = new AddressbookEntry();
 
-      $rootScope.$digest();
+      expect(entry.$save()).to.be.rejectedWith(/not valid/);
+
+      resolvePromises();
     });
 
-    // TODO: Avoid three expectations
     it('returns the added entry', function() {
-      expect(addressbook.add(validEntry)).to.eventually.have.property('name', validEntry.name);
-      expect(addressbook.add(validEntry)).to.eventually.have.property('address', validEntry.address);
-      expect(addressbook.add(validEntry)).to.eventually.have.property('id');
+      expect(entry.$save()).to.be.fulfilled.and.eventually.be.an.instanceof(AddressbookEntry);
 
-      $rootScope.$digest();
+      resolvePromises();
     });
 
-    it('adds the entry to the cached list', function(done) {
-      addressbook.add(validEntry)
-        .then(function() {
-          return addressbook.all();
-        })
-        .then(function(entries) {
-          return entries[entries.length - 1];
-        })
-        .then(function(lastEntry) {
-          expect(lastEntry).to.deep.equal(validEntry);
-          done();
-        });
-
-      $rootScope.$digest();
-    });
-
-    it('syncs a cached list with a storage', inject(function(localStorageService) {
+    it('syncs with a storage', function(done) {
       sinon.spy(localStorageService, 'set');
 
-      addressbook.add(validEntry);
+      entry.$save()
+        .then(function(entry) {
+          expect(localStorageService.set).to.have.been.called;
+        })
+        .then(done);
 
-      expect(localStorageService.set).to.have.been.called;
-
-      $rootScope.$digest();
-    }));
+      resolvePromises();
+    });
   });
 
-  describe('#update', function() {
+  describe('when udpate', function() {
 
-    var notValidEntry = {};
-    var validEntry = {};
+    var entry = null;
 
     beforeEach(function() {
-      notValidEntry = {some: 'weird', properties: 'here'};
-      validEntry = {id: 5, name: 'Elmo Frazier', address: '4989 Proin Rd.'};
+      entry = new AddressbookEntry({name: 'Elmo Frazier', address: '4989 Proin Rd.'});
     });
 
     it('rejects the promise if the entry is not found', function() {
-      var noSuchEntry = {id: 123, name: 'Elmo Frazier', address: '4989 Proin Rd.'};
+      var noSuchEntry = new AddressbookEntry({id: 123, name: 'Elmo Frazier', address: '4989 Proin Rd.'});
 
-      expect(addressbook.update(noSuchEntry)).to.eventually.be.rejectedWith(/Not found/)
+      expect(noSuchEntry.$save()).to.be.rejectedWith(/Not found/);
 
-      $rootScope.$digest();
+      resolvePromises();
     });
 
     it('rejects the promise if the entry is not valid', function() {
-      expect(addressbook.update(notValidEntry)).to.eventually.be.rejectedWith(/not valid/)
 
-      $rootScope.$digest();
-    });
+      AddressbookEntry.find(1)
+        .then(function(entry) {
+          entry.name = '';
 
-    // TODO: Avoid three expectations
-    it('returns the updated entry', function() {
-      expect(addressbook.update(validEntry)).to.eventually.have.property('name', validEntry.name);
-      expect(addressbook.update(validEntry)).to.eventually.have.property('address', validEntry.address);
-      expect(addressbook.update(validEntry)).to.eventually.have.property('id', validEntry.id);
-
-      $rootScope.$digest();
-    });
-
-    it('updates the entry inside the cached list', function(done) {
-      addressbook.update(validEntry)
-        .then(function() {
-          return addressbook.find(validEntry.id);
-        })
-        .then(function(updatedEntry) {
-          expect(updatedEntry).to.equal(validEntry);
-          done();
+          expect(entry.$save()).to.eventually.be.rejectedWith(/not valid/);
         });
 
-      $rootScope.$digest();
+      resolvePromises();
     });
 
-    it('syncs a cached list with a storage', inject(function(localStorageService) {
+    it('returns the updated entry', function() {
+      AddressbookEntry.find(1)
+        .then(function(entry) {
+          expect(entry.$save()).to.be.fulfilled.and.eventually.be.an.instanceof(AddressbookEntry);
+        });
+
+      resolvePromises();
+    });
+
+    it('syncs with a storage', function(done) {
       sinon.spy(localStorageService, 'set');
 
-      addressbook.update(validEntry);
+      AddressbookEntry.find(1)
+        .then(function(entry) {
+          return entry.$save();
+        })
+        .then(function() {
+          expect(localStorageService.set).to.have.been.called;
+        })
+        .then(done);
 
-      expect(localStorageService.set).to.have.been.called;
-    }));
+      resolvePromises();
+    });
 
   });
 });
