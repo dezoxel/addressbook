@@ -26,6 +26,7 @@
           redirectTo: '/'
         });
     })
+    .constant('mongoLabApiKey', 'ERTrXTJMc7-ELVF_uFM008EerSToARVE')
     .config(function(localStorageServiceProvider) {
       localStorageServiceProvider.setPrefix('addressbook');
     })

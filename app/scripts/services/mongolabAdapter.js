@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('addressbookApp')
-    .factory('MongoLabAdapter', function($resource) {
+    .factory('MongoLabAdapter', function($resource, mongoLabApiKey) {
       var AddressbookEntry = $resource('https://api.mongolab.com/api/1/databases/addressbook/collections/addressbook/:id', {
-        apiKey: 'ERTrXTJMc7-ELVF_uFM008EerSToARVE',
+        apiKey: mongoLabApiKey,
         id: '@_id.$oid'
       }, {
         update: {
