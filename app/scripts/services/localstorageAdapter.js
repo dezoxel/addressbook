@@ -18,7 +18,7 @@
       AddressbookEntry.all = function() {
         return $q(function(resolve) {
 
-          _fetchList();
+          _fetchListFromStorage();
 
           resolve(_list);
         });
@@ -26,6 +26,8 @@
 
       AddressbookEntry.find = function(id) {
         return $q(function(resolve, reject) {
+
+          _fetchListFromStorage();
 
           var i = _findIndexById(id);
 
@@ -52,7 +54,7 @@
           var i = _findIndexById(this.getId());
 
           if (i === -1) {
-            reject(new Error('Unable to destroy entry, not found by id: ' + this.getId()));
+            reject(new Error('Unable to delete entry, not found by id: ' + this.getId()));
           } else {
             _deleteByIndex(i);
             _syncWithStorage();
@@ -82,15 +84,13 @@
       var _list = [];
       var _predefinedList = [];
 
-      function _fetchList() {
-        var listFromStorage = localStorageService.get('list');
+      function _fetchListFromStorage() {
+        _list = _deserialize(localStorageService.get('list'));
 
-        if (_isEmpty(listFromStorage)) {
-          _list = _predefinedList;
+        if (_isEmpty(_list)) {
+          _list = _deserialize(_predefinedList);
           _syncWithStorage();
         }
-
-        _list = _deserialize(localStorageService.get('list'));
       }
 
       function _serialize(list) {
