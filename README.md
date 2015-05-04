@@ -31,15 +31,29 @@ If browser was not opened, please open the [http://localhost:9000](http://localh
 - Edit
 - Delete
 
-## TODO
-1. Create adapter for mongolab storage
-2. Implement flash messaging
-3. Make protection of adding entries after 200 addresses
-4. E2E tests
-5. Fix margins & paddings where needed
-6. Google analytics
-7. Create adapter for firebase storage
-8. Optimize performance for 2000 entries
+## Storage adapters
+
+Project supports two types of storages:
+- [MongoDB][mongodb-url]
+- Browser's [Local Storage][local-storage-url]
+
+By default, project uses [MongoDB][mongodb-url] for storing the addressbook entries. As an example we use [MongoLab][mongolab-url] SaaS.
+
+If you wish to change the storage adapter, you can do this easily through the application configuration:
+
+```javascript
+// app.js
+  .config(function(AddressbookEntryProvider) {
+    // adapter name for MongoDB - MongoLabAdapter
+    AddressbookEntryProvider.setAdapterName('LocalStorageAdapter');
+  });
+```
+
+If you will use [MongoLab][mongolab-url], please change the MongoLab Api Key in `app.js` too:
+```javascript
+// app.js
+  .constant('mongoLabApiKey', 'API_KEY')
+```
 
 ## Build & development
 
@@ -88,6 +102,19 @@ Currently project supports deployment to the [Github Pages][github-pages-url]. R
 - [Coveralls](https://coveralls.io/) - code coverage tool
 - [Code Climate](https://codeclimate.com) - code quality tool
 - [Travis CI][travis-ci-url] - CI server
+- [MongoDB][mongodb-url] - NoSQL database
+- [MongoLab][mongolab-url] - MongoDB SaaS
+- [Local Storage][local-storage-url] - Local browser's built-in database
+
+## TODO
+1. Unit tests for MongoLabAdapter
+2. Implement flash messaging
+3. Make protection of adding entries after 200 addresses
+4. E2E tests
+5. Fix margins & paddings where needed
+6. Google analytics
+7. Create adapter for firebase storage
+8. Optimize performance for 2000 entries
 
 ## Requirements
 - One entry in the addressbook is presented by **Name** (full name) and **Address** (full address) fields in the free form
@@ -150,3 +177,6 @@ Currently project supports deployment to the [Github Pages][github-pages-url]. R
 [test-service-url]: https://github.com/dezoxel/addressbook/blob/master/test/spec/services/addressbook.js
 [test-controller-url]: https://github.com/dezoxel/addressbook/blob/master/test/spec/controllers/edit.js
 [betterspecs-url]: http://betterspecs.org/
+[mongodb-url]: https://www.mongodb.org/
+[mongolab-url]: https://mongolab.com/
+[local-storage-url]: http://www.w3schools.com/Html/html5_webstorage.asp
