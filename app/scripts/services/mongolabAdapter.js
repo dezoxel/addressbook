@@ -35,6 +35,9 @@
         return null;
       };
 
+      // Since $resource doesn't have $create method, we use $save as a base
+      AddressbookEntry.prototype._$create = AddressbookEntry.prototype.$save;
+
       // we redefine $save method because we want to follow RESTful API of MongoLab where creating of resource uses
       // POST and updating of resource uses PUT
       AddressbookEntry.prototype.$save = function() {
@@ -49,9 +52,6 @@
       // PRIVATE
       //------------------------------------------------------------------------//
       var _predefinedList = [];
-
-      // Since $resource doesn't have $create method, we use $save as a base
-      AddressbookEntry.prototype._$create = AddressbookEntry.prototype.$save;
 
       return AddressbookEntry;
     });
