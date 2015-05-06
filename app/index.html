@@ -50,14 +50,14 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/list.js"></script>
-        <script src="scripts/controllers/edit.js"></script>
-        <script src="scripts/services/AddressbookEntry.js"></script>
-        <script src="scripts/services/predefinedlist.js"></script>
-        <script src="scripts/services/LocalStorageAdapter.js"></script>
-        <script src="scripts/services/MongoLabAdapter.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.module.js"></script>
+    <script src="scripts/list.controller.js"></script>
+    <script src="scripts/edit.controller.js"></script>
+    <script src="scripts/addressbook-entry.service.js"></script>
+    <script src="scripts/predefined-list.service.js"></script>
+    <script src="scripts/localstorage-adapter.service.js"></script>
+    <script src="scripts/mongolab-adapter.service.js"></script>
+    <!-- endbuild -->
 </body>
 </html>
