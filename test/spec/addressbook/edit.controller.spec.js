@@ -15,7 +15,7 @@ describe('EditController', function () {
 
   function addController() {
     return $controller('EditController', {
-      AddressbookEntry: AddressbookEntry,
+      Entry: Entry,
       $routeParams: {},
       $location: $location
     });
@@ -23,7 +23,7 @@ describe('EditController', function () {
 
   function editController() {
     return $controller('EditController', {
-      AddressbookEntry: AddressbookEntry,
+      Entry: Entry,
       $routeParams: {id: 1},
       $location: $location
     });
@@ -33,16 +33,16 @@ describe('EditController', function () {
     $rootScope.$digest();
   }
 
-  var ctrl, $location, addressbook, $rootScope, $q, $controller, AddressbookEntry;
+  var ctrl, $location, addressbook, $rootScope, $q, $controller, Entry;
 
   beforeEach(module('app.addressbook'));
 
-  beforeEach(inject(function(_$q_, _$rootScope_, _$controller_, _AddressbookEntry_) {
+  beforeEach(inject(function(_$q_, _$rootScope_, _$controller_, _Entry_) {
     $location = {path: sinon.spy()};
     $q = _$q_;
     $rootScope = _$rootScope_;
     $controller = _$controller_;
-    AddressbookEntry = _AddressbookEntry_;
+    Entry = _Entry_;
   }));
 
   describe('when add', function() {
@@ -54,7 +54,7 @@ describe('EditController', function () {
 
       ctrl = addController();
 
-      entry = new AddressbookEntry({name: 'Elmo Leonard', address: '123-7745 Vehicula Road'});
+      entry = new Entry({name: 'Elmo Leonard', address: '123-7745 Vehicula Road'});
     });
 
     it('inits the controller with an empty entry', function() {
@@ -89,8 +89,8 @@ describe('EditController', function () {
 
       entry = {id: 1, name: 'Elmo Leonard', address: '123-7745 Vehicula Road'};
 
-      AddressbookEntry = function() {};
-      AddressbookEntry.find = fulfilledPromise(entry);
+      Entry = function() {};
+      Entry.find = fulfilledPromise(entry);
 
       ctrl = editController();
       ctrl.entry = {$save: fulfilledPromise()};
@@ -98,7 +98,7 @@ describe('EditController', function () {
 
     it('fetches entry from the storage by id from the route params', function() {
 
-      expect(AddressbookEntry.find).to.have.been.called;
+      expect(Entry.find).to.have.been.called;
     });
 
     it('stores the entry in controller\'s member', function(done) {
@@ -134,7 +134,7 @@ describe('EditController', function () {
       });
 
       it('redirects to the list', function(done) {
-        AddressbookEntry.find = rejectedPromise();
+        Entry.find = rejectedPromise();
 
         ctrl.fetchEntryBy(999)
           .then(function() {

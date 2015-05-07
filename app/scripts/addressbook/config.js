@@ -3,11 +3,11 @@
 
   angular
     .module('app.addressbook')
-    .config(function(AddressbookEntryProvider) {
-      AddressbookEntryProvider.setAdapterName('MongoLabAdapter');
+    .config(function(EntryProvider) {
+      EntryProvider.setAdapterName('MongoLabAdapter');
     })
-    .run(function(AddressbookEntry, PREDEFINED_LIST) {
-      AddressbookEntry.setPredefinedList(PREDEFINED_LIST);
+    .run(function(Entry, PREDEFINED_LIST) {
+      Entry.setPredefinedList(PREDEFINED_LIST);
     });
 
 })(angular);

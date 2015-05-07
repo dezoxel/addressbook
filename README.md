@@ -43,9 +43,9 @@ If you wish to change the storage adapter, you can do this easily through the ap
 
 ```javascript
 // app.js
-  .config(function(AddressbookEntryProvider) {
+  .config(function(EntryProvider) {
     // adapter name for MongoDB - MongoLabAdapter
-    AddressbookEntryProvider.setAdapterName('LocalStorageAdapter');
+    EntryProvider.setAdapterName('LocalStorageAdapter');
   });
 ```
 

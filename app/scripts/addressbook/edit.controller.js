@@ -2,12 +2,12 @@
   'use strict';
 
   angular.module('app.addressbook')
-    .controller('EditController', function (AddressbookEntry, $routeParams, $location) {
+    .controller('EditController', function (Entry, $routeParams, $location) {
       var vm = this;
 
       vm.init = function() {
 
-        vm.entry = new AddressbookEntry();
+        vm.entry = new Entry();
 
         // edit entry action
         if ($routeParams.id) {
@@ -17,7 +17,7 @@
 
       vm.fetchEntryBy = function(id) {
 
-        return AddressbookEntry.find(id)
+        return Entry.find(id)
           .then(function(entry) {
             vm.entry = entry;
           })

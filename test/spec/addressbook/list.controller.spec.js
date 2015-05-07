@@ -13,16 +13,16 @@ describe('ListController', function () {
 
   beforeEach(module('app.addressbook'));
 
-  var ctrl, AddressbookEntry, $rootScope, $q;
+  var ctrl, Entry, $rootScope, $q;
 
   beforeEach(inject(function ($controller, _$rootScope_, _$q_) {
     $rootScope = _$rootScope_;
     $q = _$q_;
 
-    AddressbookEntry = function() {};
-    AddressbookEntry.all = fulfilledPromise([1,2,3]);
+    Entry = function() {};
+    Entry.all = fulfilledPromise([1,2,3]);
 
-    ctrl = $controller('ListController', {AddressbookEntry: AddressbookEntry});
+    ctrl = $controller('ListController', {Entry: Entry});
   }));
 
   it('sets search input to empty', function() {
@@ -30,7 +30,7 @@ describe('ListController', function () {
   });
 
   it('fetches the list of all addressbook entries', function() {
-    expect(AddressbookEntry.all).to.have.been.called;
+    expect(Entry.all).to.have.been.called;
   });
 
   it('stores the list of entries in controller member', function(done) {

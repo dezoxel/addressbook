@@ -7,10 +7,10 @@ describe('LocalStorageAdapter', function () {
 
   beforeEach(module('app.addressbook.storage.local'));
 
-  var AddressbookEntry, $rootScope, fakeLocalStorageList, entry, localStorageService;
+  var Entry, $rootScope, fakeLocalStorageList, entry, localStorageService;
 
   beforeEach(inject(function (_LocalStorageAdapter_, _$rootScope_, _localStorageService_) {
-    AddressbookEntry = _LocalStorageAdapter_;
+    Entry = _LocalStorageAdapter_;
     $rootScope = _$rootScope_;
     localStorageService = _localStorageService_;
 
@@ -28,9 +28,9 @@ describe('LocalStorageAdapter', function () {
     }));
 
     it('has ability to specify predefined list', function() {
-      AddressbookEntry.setPredefinedList([entry]);
+      Entry.setPredefinedList([entry]);
 
-      expect(AddressbookEntry.all()).to.eventually.contain(new AddressbookEntry(entry));
+      expect(Entry.all()).to.eventually.contain(new Entry(entry));
 
       resolvePromises();
     });
@@ -40,7 +40,7 @@ describe('LocalStorageAdapter', function () {
   describe('when storage is not empty', function() {
 
     it('uses local storage as a backend', function() {
-      expect(AddressbookEntry.all()).to.eventually.be.deep.equal([new AddressbookEntry(entry)]);
+      expect(Entry.all()).to.eventually.be.deep.equal([new Entry(entry)]);
 
       resolvePromises();
     });
@@ -49,25 +49,25 @@ describe('LocalStorageAdapter', function () {
   describe('.find', function() {
 
     it('rejects the promise if the entry is not found', function() {
-      expect(AddressbookEntry.find(999)).to.be.rejectedWith(/Not found/);
+      expect(Entry.find(999)).to.be.rejectedWith(/Not found/);
 
       resolvePromises();
     });
 
-    it('returns AddressbookEntry instance if found', function() {
-      expect(AddressbookEntry.find(1)).to.be.fulfilled.and.eventually.be.an.instanceof(AddressbookEntry);
+    it('returns Entry instance if found', function() {
+      expect(Entry.find(1)).to.be.fulfilled.and.eventually.be.an.instanceof(Entry);
 
       resolvePromises();
     });
 
     it('accepts numbers inside string as an ID', function() {
-      expect(AddressbookEntry.find('1')).to.be.fulfilled.and.eventually.be.an.instanceof(AddressbookEntry);
+      expect(Entry.find('1')).to.be.fulfilled.and.eventually.be.an.instanceof(Entry);
 
       resolvePromises();
     });
 
     it('doesnt use cached list', function(done) {
-      AddressbookEntry.find(1)
+      Entry.find(1)
         .then(function() {
           expect(localStorageService.get).to.have.been.calledWith('list');
         })
@@ -80,7 +80,7 @@ describe('LocalStorageAdapter', function () {
   describe('#delete', function() {
 
     it('fulfills promise if entry was deleted', function(done) {
-      AddressbookEntry.find(1)
+      Entry.find(1)
         .then(function(entry) {
           expect(entry.$delete()).to.be.fulfilled;
         })
@@ -90,7 +90,7 @@ describe('LocalStorageAdapter', function () {
     });
 
     it('rejects promise if entry was not deleted', function() {
-      var entry = new AddressbookEntry({id: 999, name: 'Test name', address: 'Test address'});
+      var entry = new Entry({id: 999, name: 'Test name', address: 'Test address'});
       expect(entry.$delete()).to.be.rejectedWith(/Unable to delete/);
 
       resolvePromises();
@@ -99,7 +99,7 @@ describe('LocalStorageAdapter', function () {
     it('removes the entry', function(done) {
       var initialLength = 0;
 
-      AddressbookEntry.find(1)
+      Entry.find(1)
         .then(function(entry) {
           return entry.$delete();
         })
@@ -114,7 +114,7 @@ describe('LocalStorageAdapter', function () {
     it('syncs a cached list with a storage', function(done) {
       sinon.spy(localStorageService, 'set');
 
-      AddressbookEntry.find(1)
+      Entry.find(1)
         .then(function(entry) {
           return entry.$delete();
         })
@@ -132,11 +132,11 @@ describe('LocalStorageAdapter', function () {
     var entry = null;
 
     beforeEach(function() {
-      entry = new AddressbookEntry({name: 'Elmo Frazier', address: '4989 Proin Rd.'});
+      entry = new Entry({name: 'Elmo Frazier', address: '4989 Proin Rd.'});
     });
 
     it('rejects the promise if the entry is not valid', function() {
-      entry = new AddressbookEntry();
+      entry = new Entry();
 
       expect(entry.$save()).to.be.rejectedWith(/not valid/);
 
@@ -144,7 +144,7 @@ describe('LocalStorageAdapter', function () {
     });
 
     it('returns the added entry', function() {
-      expect(entry.$save()).to.be.fulfilled.and.eventually.be.an.instanceof(AddressbookEntry);
+      expect(entry.$save()).to.be.fulfilled.and.eventually.be.an.instanceof(Entry);
 
       resolvePromises();
     });
@@ -167,11 +167,11 @@ describe('LocalStorageAdapter', function () {
     var entry = null;
 
     beforeEach(function() {
-      entry = new AddressbookEntry({name: 'Elmo Frazier', address: '4989 Proin Rd.'});
+      entry = new Entry({name: 'Elmo Frazier', address: '4989 Proin Rd.'});
     });
 
     it('rejects the promise if the entry is not found', function() {
-      var noSuchEntry = new AddressbookEntry({id: 123, name: 'Elmo Frazier', address: '4989 Proin Rd.'});
+      var noSuchEntry = new Entry({id: 123, name: 'Elmo Frazier', address: '4989 Proin Rd.'});
 
       expect(noSuchEntry.$save()).to.be.rejectedWith(/Not found/);
 
@@ -180,7 +180,7 @@ describe('LocalStorageAdapter', function () {
 
     it('rejects the promise if the entry is not valid', function() {
 
-      AddressbookEntry.find(1)
+      Entry.find(1)
         .then(function(entry) {
           entry.name = '';
 
@@ -191,9 +191,9 @@ describe('LocalStorageAdapter', function () {
     });
 
     it('returns the updated entry', function() {
-      AddressbookEntry.find(1)
+      Entry.find(1)
         .then(function(entry) {
-          expect(entry.$save()).to.be.fulfilled.and.eventually.be.an.instanceof(AddressbookEntry);
+          expect(entry.$save()).to.be.fulfilled.and.eventually.be.an.instanceof(Entry);
         });
 
       resolvePromises();
@@ -202,7 +202,7 @@ describe('LocalStorageAdapter', function () {
     it('syncs with a storage', function(done) {
       sinon.spy(localStorageService, 'set');
 
-      AddressbookEntry.find(1)
+      Entry.find(1)
         .then(function(entry) {
           return entry.$save();
         })

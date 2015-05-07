@@ -3,7 +3,7 @@
 
   angular.module('app.addressbook.storage.mongolab')
     .factory('MongoLabAdapter', function($resource, MONGOLAB_API_KEY) {
-      var AddressbookEntry = $resource('https://api.mongolab.com/api/1/databases/addressbook/collections/addressbook/:id', {
+      var Entry = $resource('https://api.mongolab.com/api/1/databases/addressbook/collections/addressbook/:id', {
         apiKey: MONGOLAB_API_KEY,
         id: '@_id.$oid'
       }, {
@@ -15,19 +15,19 @@
       //------------------------------------------------------------------------//
       // PUBLIC
       //------------------------------------------------------------------------//
-      AddressbookEntry.all = function() {
-        return AddressbookEntry.query().$promise;
+      Entry.all = function() {
+        return Entry.query().$promise;
       };
 
-      AddressbookEntry.find = function(id) {
-        return AddressbookEntry.get({id: id}).$promise;
+      Entry.find = function(id) {
+        return Entry.get({id: id}).$promise;
       };
 
-      AddressbookEntry.setPredefinedList = function(list) {
+      Entry.setPredefinedList = function(list) {
         _predefinedList = list;
       };
 
-      AddressbookEntry.prototype.getId = function() {
+      Entry.prototype.getId = function() {
         if (this._id) {
           return this._id.$oid;
         }
@@ -36,15 +36,15 @@
       };
 
       // Since $resource doesn't have $create method, we use $save as a base
-      AddressbookEntry.prototype._$create = AddressbookEntry.prototype.$save;
+      Entry.prototype._$create = Entry.prototype.$save;
 
       // we redefine $save method because we want to follow RESTful API of MongoLab where creating of resource uses
       // POST and updating of resource uses PUT
-      AddressbookEntry.prototype.$save = function() {
+      Entry.prototype.$save = function() {
         return this.isNew() ? this._$create.apply(this, arguments) : this.$update.apply(this, arguments);
       };
 
-      AddressbookEntry.prototype.isNew = function() {
+      Entry.prototype.isNew = function() {
         return !Boolean(this.getId());
       };
 
@@ -53,7 +53,7 @@
       //------------------------------------------------------------------------//
       var _predefinedList = [];
 
-      return AddressbookEntry;
+      return Entry;
     });
 
 

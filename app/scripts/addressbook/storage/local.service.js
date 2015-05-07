@@ -4,7 +4,7 @@
   angular.module('app.addressbook.storage.local')
     .factory('LocalStorageAdapter', function(localStorageService, $q) {
 
-      function AddressbookEntry(entry) {
+      function Entry(entry) {
         if (entry) {
           this.id = entry.id;
           this.name = entry.name;
@@ -15,7 +15,7 @@
       //------------------------------------------------------------------------//
       // PUBLIC
       //------------------------------------------------------------------------//
-      AddressbookEntry.all = function() {
+      Entry.all = function() {
         return $q(function(resolve) {
 
           _fetchListFromStorage();
@@ -24,7 +24,7 @@
         });
       };
 
-      AddressbookEntry.find = function(id) {
+      Entry.find = function(id) {
         return $q(function(resolve, reject) {
 
           _fetchListFromStorage();
@@ -32,7 +32,7 @@
           var i = _findIndexById(id);
 
           if (i === -1) {
-            reject(new Error('AddressbookEntry.find(' + id +'): Not found'));
+            reject(new Error('Entry.find(' + id +'): Not found'));
           } else {
             resolve(_list[i]);
           }
@@ -40,7 +40,7 @@
         });
       };
 
-      AddressbookEntry.prototype.$save = function() {
+      Entry.prototype.$save = function() {
         if (this.isNew()) {
           return _add(this);
         } else {
@@ -48,7 +48,7 @@
         }
       };
 
-      AddressbookEntry.prototype.$delete = function() {
+      Entry.prototype.$delete = function() {
         return $q(function(resolve, reject) {
 
           var i = _findIndexById(this.getId());
@@ -65,22 +65,22 @@
         }.bind(this));
       };
 
-      AddressbookEntry.prototype.getId = function() {
+      Entry.prototype.getId = function() {
         return this.id;
       };
 
-      AddressbookEntry.prototype.isNew = function() {
+      Entry.prototype.isNew = function() {
         return !Boolean(this.getId());
       };
 
-      AddressbookEntry.setPredefinedList = function(list) {
+      Entry.setPredefinedList = function(list) {
         _predefinedList = list;
       };
 
       //------------------------------------------------------------------------//
       // PRIVATE
       //------------------------------------------------------------------------//
-      // cached list of AddressbookEntry entries
+      // cached list of Entry entries
       var _list = [];
       var _predefinedList = [];
 
@@ -101,7 +101,7 @@
         var resultList = [];
 
         list.forEach(function(entry) {
-          resultList.push(new AddressbookEntry(entry));
+          resultList.push(new Entry(entry));
         });
 
         return resultList;
@@ -111,7 +111,7 @@
         return $q(function(resolve, reject) {
 
           if (!_isValid(entry)) {
-            reject(new Error('AddressbookEntry.add: Entry is not valid'));
+            reject(new Error('Entry.add: Entry is not valid'));
           } else {
             entry.id = _generateId();
             _list.push(entry);
@@ -128,7 +128,7 @@
         return $q(function(resolve, reject) {
 
           if (!_isValid(entry)) {
-            return reject(new Error('AddressbookEntry.update: Entry is not valid'));
+            return reject(new Error('Entry.update: Entry is not valid'));
           }
 
           var i = _findIndexById(entry.id);
@@ -183,7 +183,7 @@
         return isValidName && isValidAddress;
       }
 
-      return AddressbookEntry;
+      return Entry;
     });
 
 })(angular);

@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('app.addressbook')
-    .controller('ListController', function (AddressbookEntry) {
+    .controller('ListController', function (Entry) {
       var vm = this;
 
       vm.init = function() {
@@ -14,7 +14,7 @@
 
       vm.fetchList = function() {
 
-        return AddressbookEntry.all()
+        return Entry.all()
           .then(function(entries) {
             vm.entries = entries;
           });
