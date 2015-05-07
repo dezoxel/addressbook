@@ -35,7 +35,7 @@ describe('EditController', function () {
 
   var ctrl, $location, addressbook, $rootScope, $q, $controller, AddressbookEntry;
 
-  beforeEach(module('addressbookApp'));
+  beforeEach(module('app.addressbook'));
 
   beforeEach(inject(function(_$q_, _$rootScope_, _$controller_, _AddressbookEntry_) {
     $location = {path: sinon.spy()};

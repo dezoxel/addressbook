@@ -5,7 +5,7 @@ describe('LocalStorageAdapter', function () {
     $rootScope.$digest();
   }
 
-  beforeEach(module('addressbookApp'));
+  beforeEach(module('app.addressbook.storage.local'));
 
   var AddressbookEntry, $rootScope, fakeLocalStorageList, entry, localStorageService;
 

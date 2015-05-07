@@ -1,7 +1,7 @@
 describe('MongoLabAdapter', function () {
   'use strict';
 
-  beforeEach(module('addressbookApp'));
+  beforeEach(module('app.addressbook.storage.mongolab'));
 
   // instantiate service
   var MongoLabAdapter;

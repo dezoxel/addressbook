@@ -1,7 +1,7 @@
 describe('AddressbookEntry', function() {
   var provider;
 
-  beforeEach(module('addressbookApp', function(AddressbookEntryProvider) {
+  beforeEach(module('app.addressbook', function(AddressbookEntryProvider) {
     provider = AddressbookEntryProvider;
   }));
 
@@ -28,7 +28,3 @@ describe('AddressbookEntry', function() {
     }));
   });
 });
-
-
-
-

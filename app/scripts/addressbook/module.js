@@ -3,6 +3,7 @@
 
   angular
     .module('app.addressbook', [
+      'app.core',
       'app.addressbook.storage.local',
       'app.addressbook.storage.mongolab'
     ]);

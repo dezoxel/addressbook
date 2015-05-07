@@ -1,7 +1,7 @@
 describe('PREDEFINED_LIST', function () {
   'use strict';
 
-  beforeEach(module('addressbookApp'));
+  beforeEach(module('app.addressbook'));
 
   var PREDEFINED_LIST;
   beforeEach(inject(function (_PREDEFINED_LIST_) {

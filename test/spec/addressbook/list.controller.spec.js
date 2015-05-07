@@ -11,7 +11,7 @@ describe('ListController', function () {
     }))
   }
 
-  beforeEach(module('addressbookApp'));
+  beforeEach(module('app.addressbook'));
 
   var ctrl, AddressbookEntry, $rootScope, $q;
 
