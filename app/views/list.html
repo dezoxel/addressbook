@@ -8,14 +8,14 @@
         <a ng-href="#/add" class="btn btn-primary btn-sm">Add address</a>
       </th>
     </tr>
-    <tr ng-repeat="entry in list.entries | filter:searchInput">
+    <tr ng-repeat="entry in vm.entries | filter:searchInput">
       <td>{{ entry.name }}</td>
       <td>{{ entry.address }}</td>
       <td>
         <a ng-href="#/edit/{{ entry.getId() }}" class="btn btn-default btn-sm">
           <i class="glyphicon glyphicon-pencil"></i> Edit
         </a>
-        <button class="btn btn-danger btn-sm" ng-click="list.delete(entry)">
+        <button class="btn btn-danger btn-sm" ng-click="vm.delete(entry)">
           <i class="glyphicon glyphicon-trash"></i> Delete
         </button>
       </td>

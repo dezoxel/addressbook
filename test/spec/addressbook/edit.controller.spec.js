@@ -33,7 +33,7 @@ describe('EditController', function () {
     $rootScope.$digest();
   }
 
-  var ctrl, $location, addressbook, $rootScope, $q, $controller, Entry;
+  var vm, $location, addressbook, $rootScope, $q, $controller, Entry;
 
   beforeEach(module('app.addressbook'));
 
@@ -52,26 +52,26 @@ describe('EditController', function () {
     beforeEach(function() {
       addressbook = {add: fulfilledPromise()};
 
-      ctrl = addController();
+      vm = addController();
 
       entry = new Entry({name: 'Elmo Leonard', address: '123-7745 Vehicula Road'});
     });
 
     it('inits the controller with an empty entry', function() {
-      expect(ctrl.entry.isNew()).to.be.true;
+      expect(vm.entry.isNew()).to.be.true;
     });
 
     it('adds entry to the list', function() {
-      ctrl.entry = {$save: fulfilledPromise()};
-      ctrl.save();
+      vm.entry = {$save: fulfilledPromise()};
+      vm.save();
 
-      expect(ctrl.entry.$save).to.have.been.called;
+      expect(vm.entry.$save).to.have.been.called;
     });
 
     it('redirects to the list controller', function(done) {
-      ctrl.entry = {$save: fulfilledPromise()};
+      vm.entry = {$save: fulfilledPromise()};
 
-      ctrl.save()
+      vm.save()
         .then(function() {
           expect($location.path).to.have.been.calledWith('/');
         })
@@ -92,8 +92,8 @@ describe('EditController', function () {
       Entry = function() {};
       Entry.find = fulfilledPromise(entry);
 
-      ctrl = editController();
-      ctrl.entry = {$save: fulfilledPromise()};
+      vm = editController();
+      vm.entry = {$save: fulfilledPromise()};
     });
 
     it('fetches entry from the storage by id from the route params', function() {
@@ -102,9 +102,9 @@ describe('EditController', function () {
     });
 
     it('stores the entry in controller\'s member', function(done) {
-      ctrl.fetchEntryBy(1)
+      vm.fetchEntryBy(1)
         .then(function() {
-          expect(ctrl.entry).to.deep.equal(entry);
+          expect(vm.entry).to.deep.equal(entry);
         })
         .then(done);
 
@@ -112,13 +112,13 @@ describe('EditController', function () {
     });
 
     it('updates entry in the list', function() {
-      ctrl.save();
+      vm.save();
 
-      expect(ctrl.entry.$save).to.have.been.called;
+      expect(vm.entry.$save).to.have.been.called;
     });
 
     it('redirects to the list controller', function(done) {
-      ctrl.save()
+      vm.save()
         .then(function() {
           expect($location.path).to.have.been.calledWith('/');
         })
@@ -130,13 +130,13 @@ describe('EditController', function () {
     describe('when record is not found', function() {
 
       beforeEach(function() {
-        ctrl = addController();
+        vm = addController();
       });
 
       it('redirects to the list', function(done) {
         Entry.find = rejectedPromise();
 
-        ctrl.fetchEntryBy(999)
+        vm.fetchEntryBy(999)
           .then(function() {
             expect($location.path).to.have.been.calledWith('/');
           })
@@ -150,18 +150,18 @@ describe('EditController', function () {
   describe('when delete', function() {
 
     beforeEach(function () {
-      ctrl = addController();
-      ctrl.entry = {$delete: fulfilledPromise()};
+      vm = addController();
+      vm.entry = {$delete: fulfilledPromise()};
     });
 
     it('deletes entry', function() {
-      ctrl.delete();
+      vm.delete();
 
-      expect(ctrl.entry.$delete).to.have.been.called;
+      expect(vm.entry.$delete).to.have.been.called;
     });
 
     it('redirects to the list controller', function(done) {
-      ctrl.delete()
+      vm.delete()
         .then(function() {
           expect($location.path).to.have.been.calledWith('/');
         })

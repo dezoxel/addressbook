@@ -13,7 +13,7 @@ describe('ListController', function () {
 
   beforeEach(module('app.addressbook'));
 
-  var ctrl, Entry, $rootScope, $q;
+  var vm, Entry, $rootScope, $q;
 
   beforeEach(inject(function ($controller, _$rootScope_, _$q_) {
     $rootScope = _$rootScope_;
@@ -22,11 +22,11 @@ describe('ListController', function () {
     Entry = function() {};
     Entry.all = fulfilledPromise([1,2,3]);
 
-    ctrl = $controller('ListController', {Entry: Entry});
+    vm = $controller('ListController', {Entry: Entry});
   }));
 
   it('sets search input to empty', function() {
-    expect(ctrl.searchInput).to.equal('');
+    expect(vm.searchInput).to.equal('');
   });
 
   it('fetches the list of all addressbook entries', function() {
@@ -35,8 +35,8 @@ describe('ListController', function () {
 
   it('stores the list of entries in controller member', function(done) {
 
-    ctrl.fetchList().then(function() {
-      expect(ctrl.entries).to.deep.equal([1,2,3]);
+    vm.fetchList().then(function() {
+      expect(vm.entries).to.deep.equal([1,2,3]);
     })
     .then(done);
 
@@ -46,7 +46,7 @@ describe('ListController', function () {
   it('has ability to delete entry', function() {
     var entry = {$delete: fulfilledPromise()};
 
-    ctrl.delete(entry);
+    vm.delete(entry);
 
     expect(entry.$delete).to.have.been.called;
   });
