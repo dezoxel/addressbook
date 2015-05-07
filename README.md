@@ -3,7 +3,7 @@ Implementation of simple addressbook on [AngularJS][angular-url]
 
 If you need real-world application using [AngularJS][angular-url] but you tired from [TodoMVC](http://todomvc.com/) app - this project is for you.
 
-Here you can find the code written in best practices and can be a good platform to catch ideas about structuring and writing the code.
+Here you can find the code written in [best practices][styleguide-url] and can be a good platform to catch ideas about structuring and writing the code.
 
 Constantly trying to start writing the tests but you don't understand how to structure and what to test? Your tests looks dirty and too complicated? Checkout the real tests for [services][test-service-url] and [controllers][test-controller-url]. These are following [BetterSpecs][betterspecs-url] guidelines so they looks easy and maintainable.
 
@@ -42,16 +42,16 @@ By default, project uses [MongoDB][mongodb-url] for storing the addressbook entr
 If you wish to change the storage adapter, you can do this easily through the application configuration:
 
 ```javascript
-// app.js
+// addressbook/config.js
   .config(function(EntryProvider) {
     // adapter name for MongoDB - MongoLabAdapter
     EntryProvider.setAdapterName('LocalStorageAdapter');
   });
 ```
 
-If you will use [MongoLab][mongolab-url], please change the MongoLab Api Key in `app.js` too:
+If you will use [MongoLab][mongolab-url], please change the MongoLab Api Key in `addressbook/storage/mongolab.config.js` too:
 ```javascript
-// app.js
+// addressbook/storage/mongolab.config.js
   .constant('MONGOLAB_API_KEY', 'API_KEY')
 ```
 
@@ -78,7 +78,7 @@ Tests are following [BetterSpecs][betterspecs-url] guidelines.
 
 Run `grunt plato` for generating code static analysis using [Plato][plato-url].
 Visit `reports/static-analysis/index.html` in your browser in order to see the report.
-Currently code is **75.45%** maintainable according to [Plato][plato-url]
+Currently code is **81.30%** maintainable according to [Plato][plato-url]
 
 ## Deployment
 
@@ -174,9 +174,10 @@ Currently project supports deployment to the [Github Pages][github-pages-url]. R
 [karma-url]: http://karma-runner.github.io/
 [travis-ci-url]: https://travis-ci.org/
 [plato-url]: https://github.com/es-analysis/plato
-[test-service-url]: https://github.com/dezoxel/addressbook/blob/master/test/spec/services/addressbook.js
-[test-controller-url]: https://github.com/dezoxel/addressbook/blob/master/test/spec/controllers/edit.js
+[test-service-url]: https://github.com/dezoxel/addressbook/blob/master/test/spec/addressbook/storage/local.service.spec.js
+[test-controller-url]: https://github.com/dezoxel/addressbook/blob/master/test/spec/addressbook/edit.controller.spec.js
 [betterspecs-url]: http://betterspecs.org/
 [mongodb-url]: https://www.mongodb.org/
 [mongolab-url]: https://mongolab.com/
 [local-storage-url]: http://www.w3schools.com/Html/html5_webstorage.asp
+[styleguide-url]: https://github.com/johnpapa/angular-styleguide
