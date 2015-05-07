@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('app.addressbook')
-    .controller('ListController', function (Entry) {
+    .controller('ListController', function (Entry, $route) {
       var vm = this;
 
       vm.init = function() {
@@ -25,6 +25,9 @@
         entry.$delete()
           .catch(function() {
             console.error('Unable to delete entry');
+          })
+          .finally(function() {
+            $route.reload();
           });
       };
 
