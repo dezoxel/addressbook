@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('addressbookApp')
+    .module('app.addressbook')
     .config(function ($routeProvider) {
       $routeProvider
         .when('/', {

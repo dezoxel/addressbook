@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="addressbookApp">
+  <body ng-app="app">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -52,14 +52,20 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.module.js"></script>
-    <script src="scripts/app.config.js"></script>
-    <script src="scripts/app.route.js"></script>
+    <script src="scripts/core/module.js"></script>
+    <script src="scripts/addressbook/module.js"></script>
+    <script src="scripts/addressbook/config.js"></script>
+    <script src="scripts/addressbook/route.js"></script>
     <script src="scripts/addressbook/list.controller.js"></script>
     <script src="scripts/addressbook/edit.controller.js"></script>
     <script src="scripts/addressbook/addressbook-entry.service.js"></script>
     <script src="scripts/addressbook/predefined-list.service.js"></script>
-    <script src="scripts/addressbook/localstorage-adapter.service.js"></script>
-    <script src="scripts/addressbook/mongolab-adapter.service.js"></script>
+    <script src="scripts/addressbook/storage/local.module.js"></script>
+    <script src="scripts/addressbook/storage/local.config.js"></script>
+    <script src="scripts/addressbook/storage/local.service.js"></script>
+    <script src="scripts/addressbook/storage/mongolab.module.js"></script>
+    <script src="scripts/addressbook/storage/mongolab.config.js"></script>
+    <script src="scripts/addressbook/storage/mongolab.service.js"></script>
     <!-- endbuild -->
 </body>
 </html>

@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('addressbookApp')
+  angular.module('app.addressbook')
     .provider('AddressbookEntry', function() {
       var adapterName = null;
 

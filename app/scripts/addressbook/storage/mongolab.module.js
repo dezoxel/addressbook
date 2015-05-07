@@ -2,9 +2,8 @@
   'use strict';
 
   angular
-    .module('app', [
-      'app.core',
-      'app.addressbook'
+    .module('app.addressbook.storage.mongolab', [
+      'ngResource'
     ]);
 
 })(angular);

@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('addressbookApp')
+  angular.module('app.addressbook')
     .controller('ListController', function (AddressbookEntry) {
       var vm = this;
 

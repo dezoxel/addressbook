@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('addressbookApp')
+  angular.module('app.addressbook')
     .constant('predefinedList', [{
         'id': 1,
         'name': 'Laura Morin',

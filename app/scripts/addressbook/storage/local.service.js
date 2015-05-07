@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('addressbookApp')
+  angular.module('app.addressbook.storage.local')
     .factory('LocalStorageAdapter', function(localStorageService, $q) {
 
       function AddressbookEntry(entry) {
