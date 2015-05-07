@@ -3,24 +3,6 @@
 
   angular
     .module('addressbookApp')
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/', {
-          templateUrl: 'views/list.html',
-          controller: 'ListController as list'
-        })
-        .when('/add', {
-          templateUrl: 'views/edit.html',
-          controller: 'EditController as ctrl'
-        })
-        .when('/edit/:id', {
-          templateUrl: 'views/edit.html',
-          controller: 'EditController as ctrl'
-        })
-        .otherwise({
-          redirectTo: '/'
-        });
-    })
     .constant('mongoLabApiKey', 'ERTrXTJMc7-ELVF_uFM008EerSToARVE')
     .config(function(localStorageServiceProvider) {
       localStorageServiceProvider.setPrefix('addressbook');
