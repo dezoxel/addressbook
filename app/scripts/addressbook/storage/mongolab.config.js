@@ -3,6 +3,6 @@
 
   angular
     .module('app.addressbook.storage.mongolab')
-    .constant('mongoLabApiKey', 'ERTrXTJMc7-ELVF_uFM008EerSToARVE');
+    .constant('MONGOLAB_API_KEY', 'ERTrXTJMc7-ELVF_uFM008EerSToARVE');
 
 })(angular);

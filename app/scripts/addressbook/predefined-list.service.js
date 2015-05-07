@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('app.addressbook')
-    .constant('predefinedList', [{
+    .constant('PREDEFINED_LIST', [{
         'id': 1,
         'name': 'Laura Morin',
         'address': 'P.O. Box 825, 7962 Ante, Ave'

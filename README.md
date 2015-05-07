@@ -52,7 +52,7 @@ If you wish to change the storage adapter, you can do this easily through the ap
 If you will use [MongoLab][mongolab-url], please change the MongoLab Api Key in `app.js` too:
 ```javascript
 // app.js
-  .constant('mongoLabApiKey', 'API_KEY')
+  .constant('MONGOLAB_API_KEY', 'API_KEY')
 ```
 
 ## Build & development

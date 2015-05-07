@@ -6,8 +6,8 @@
     .config(function(AddressbookEntryProvider) {
       AddressbookEntryProvider.setAdapterName('MongoLabAdapter');
     })
-    .run(function(AddressbookEntry, predefinedList) {
-      AddressbookEntry.setPredefinedList(predefinedList);
+    .run(function(AddressbookEntry, PREDEFINED_LIST) {
+      AddressbookEntry.setPredefinedList(PREDEFINED_LIST);
     });
 
 })(angular);
