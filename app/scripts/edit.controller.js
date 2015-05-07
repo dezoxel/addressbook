@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('addressbookApp')
-    .controller('EditCtrl', function (AddressbookEntry, $routeParams, $location) {
+    .controller('EditController', function (AddressbookEntry, $routeParams, $location) {
       var vm = this;
 
       vm.init = function() {

@@ -1,4 +1,4 @@
-describe('EditCtrl', function () {
+describe('EditController', function () {
   'use strict';
 
   function fulfilledPromise(entry) {
@@ -14,7 +14,7 @@ describe('EditCtrl', function () {
   }
 
   function addController() {
-    return $controller('EditCtrl', {
+    return $controller('EditController', {
       AddressbookEntry: AddressbookEntry,
       $routeParams: {},
       $location: $location
@@ -22,7 +22,7 @@ describe('EditCtrl', function () {
   }
 
   function editController() {
-    return $controller('EditCtrl', {
+    return $controller('EditController', {
       AddressbookEntry: AddressbookEntry,
       $routeParams: {id: 1},
       $location: $location

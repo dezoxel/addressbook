@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('addressbookApp')
-    .controller('ListCtrl', function (AddressbookEntry) {
+    .controller('ListController', function (AddressbookEntry) {
       var vm = this;
 
       vm.init = function() {

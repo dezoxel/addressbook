@@ -1,4 +1,4 @@
-describe('ListCtrl', function () {
+describe('ListController', function () {
   'use strict';
 
   function resolvePromises() {
@@ -22,7 +22,7 @@ describe('ListCtrl', function () {
     AddressbookEntry = function() {};
     AddressbookEntry.all = fulfilledPromise([1,2,3]);
 
-    ctrl = $controller('ListCtrl', {AddressbookEntry: AddressbookEntry});
+    ctrl = $controller('ListController', {AddressbookEntry: AddressbookEntry});
   }));
 
   it('sets search input to empty', function() {

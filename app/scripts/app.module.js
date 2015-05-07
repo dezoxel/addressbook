@@ -12,15 +12,15 @@
       $routeProvider
         .when('/', {
           templateUrl: 'views/list.html',
-          controller: 'ListCtrl as list'
+          controller: 'ListController as list'
         })
         .when('/add', {
           templateUrl: 'views/edit.html',
-          controller: 'EditCtrl as ctrl'
+          controller: 'EditController as ctrl'
         })
         .when('/edit/:id', {
           templateUrl: 'views/edit.html',
-          controller: 'EditCtrl as ctrl'
+          controller: 'EditController as ctrl'
         })
         .otherwise({
           redirectTo: '/'
