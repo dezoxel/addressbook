@@ -111,16 +111,15 @@
         return $q(function(resolve, reject) {
 
           if (!_isValid(entry)) {
-            reject(new Error('Entry.add: Entry is not valid'));
-          } else {
-            entry.id = _generateId();
-            _list.push(entry);
-
-            _syncWithStorage();
-
-            resolve(entry);
+            return reject(new Error('Entry.add: Entry is not valid'));
           }
 
+          entry.id = _generateId();
+          _list.push(entry);
+
+          _syncWithStorage();
+
+          return resolve(entry);
         });
       }
 
